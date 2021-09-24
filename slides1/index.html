@@ -1,0 +1,717 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Rocket Telemetry</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/moon.css">
+		<link rel="stylesheet" href="/path/to/styles/default.css">
+		<script src="/path/to/highlight.pack.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+				<section>
+					<h1>Rocket</h1>
+					<h3>Telemetry</h3>
+					<p>
+						<small>malucart</small>
+					</p>
+				</section>
+
+				<section>
+					<h2>Sinopse</h2>
+					<p>
+						The project of data transmission and reception system has two LoRa1278 modules:
+					</p>
+					<p>
+						> one inside the rocket and the other one with me <
+					</p>
+				</section>
+				<section>
+					<section>
+						<h2>Communication in North America</h2>
+						<p>
+							Antennas are connected to carry out the transmission with 915MHz, which is the fundamental parameter for communication in the United States.
+						</p>
+
+						<br>
+						<a href="#" class="navigate-down">
+							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
+						</a>
+					</section>
+					<section>
+						<h2>Programming Language</h2>
+						<p>
+							It's written in C, however, I'll improve it using AVR Assembly for low level optimization.
+						</p>
+					</section>
+					<section>
+						<h2>Arduino Wiring</h2>
+							<img width="730" height="536" data-src="https://cdn-learn.adafruit.com/assets/assets/000/040/615/original/adafruit_products_rfm69_bb.png?1491192519" alt="Down arrow">
+					</section>
+					<section>
+						<h2>Arduino Wiring</h2>
+						<small><small>
+						<p>Vin connects to the Arduino 5V pin. If you're using a 3.3V Arduino, connect to 3.3V;</p>
+						<p>GND connects to Arduino ground;</p>
+						<p>SCLK connects to SPI clock. On Arduino Uno/Duemilanove/328-based, thats Digital 13. On Mega's, its Digital 52 and on Leonardo/Due its ICSP-3;</p>
+						<p>MISO connects to SPI MISO. On Arduino Uno/Duemilanove/328-based, thats Digital 12. On Mega's, its Digital 50 and on Leonardo/Due its ICSP-1;</p>
+						<p>MOSI connects to SPI MOSI. On Arduino Uno/Duemilanove/328-based, thats Digital 11. On Mega's, its Digital 51 and on Leonardo/Due its ICSP-4;</p>
+						<p>CS connects to our SPI Chip Select pin. We'll be using Digital 4 but you can later change this to any pin;</p>
+						<p>RST connects to our radio reset pin. We'll be using Digital 2 but you can later change this pin too;</p>
+						<p>G0 (IRQ) connects to an interrupt-capable pin. We'll be using Digital 3 but you can later change this pin too. However, it must connect a hardware Interrupt pin. Not all pins can do this! Check the board documentation for which pins are hardware interrupts, you'll also need the hardware interrupt number. For example, on UNO digital 3 is interrupt #1.</p>
+						</small></small>
+					</section>
+					<section>
+						<h2>temperature and humidity sensor</h2>
+						<img width="730" height="536" src="https://i.imgur.com/9QRXdeU.jpg">
+					</section>
+				</section>
+
+				<section>
+				<h2>Code</h2>
+				<p>main.c (rocket transmitter)</p>
+					<pre><code class="hljs" data-trim data-line-numbers="8-11,15,22,33-35,38,44-56,59,61,64,65,68,70,72,74-77,80,82,83,85,88,90,92,93,98,99,101-105,108,110,113,116-118,121-123,126,127,129,132,133,135-137,141,143-145,147-150,152,153">
+/**
+ * Rocket data transmitter through RFM9X
+ * TODO: currently using Arduino SPI and Library RH_RF95 that uses C++ a lot
+ * This isn't a good idea as C++ uses object that uses lot of space and is a waste of cycles
+ * rewrite it.
+ */
+
+#include <SPI.h>
+#include <RH_RF95.h>
+#include <avr/io.h>
+#include <util/delay.h>
+
+// custom serial library
+// because arduino library sucks
+#include "serial.h"
+
+/**
+ * Current frequency that we are transmitting information, if you want to change it
+ * *please* again read the datasheet to check the supported frequency
+ */
+
+#define FREQUENCY 915
+
+/**
+ * Layout:
+ * SS = Slave Select/Chip Select
+ * RST = Reset
+ * IRQ = Hardware Interrupt IRQ, ATmega328p uses Pin2 for hardware interrupt
+ * if you want to change it, *please* read the datasheet to make sure that the pin
+ * has support for hardware interrupt, kthx
+ */
+
+#define SS 10
+#define RST 9
+#define IRQ 2
+
+// global object for rf95 board
+RH_RF95 rf95(SS, IRQ);
+
+// constant string should be in flash memory
+// don't need to be in SRAM, save memory and is better
+// PGM_P: used to declare a variable that is a pointer to a string in program space
+// PROGMEM: attribute to use in order to declare an object being located in flash ROM
+PGM_P const MESSAGE_LIST[0xB] PROGMEM = {
+	"[-] initializing transmissor\n\0",          // 0x0
+	"[-] error while initializing\n\0",          // 0x1
+	"[-] initialized\n\0",                       // 0x2
+	"[-] error while setting frequency\n\0",     // 0x3
+	"[-] starting main loop\n\0",                // 0x4
+	"[-] sending message to receiver\n\0",       // 0x5
+	"[-] delay for packet\n\0",                  // 0x6
+	"[-] waiting the reply\n\0",                 // 0x7
+	"[-] we got a message back\n\0",             // 0x8
+	"[-] failed to receive message\n\0",         // 0x9
+	"[-] no reply, anyone around?\n\0"           // 0xA
+};
+
+
+inline void init_transmitter() {
+	// i/o init
+	init();
+
+	// reset the chip
+	pinMode (RST, OUTPUT);
+	digitalWrite(RST, HIGH);
+
+	// initialize serial
+	usart_start();
+	// wait 120ms so we can start
+	_delay_ms(120);
+
+	usart_print(MESSAGE_LIST[0x0]);
+
+	digitalWrite(RST, LOW);
+	_delay_ms(15);
+	digitalWrite(RST, HIGH);
+	_delay_ms(15);
+
+	// wait for lora initialize
+	while (!rf95.init()) {
+		// something bad happened, check the cables
+		usart_print(MESSAGE_LIST[0x1]);
+	}
+
+	usart_print(MESSAGE_LIST[0x2]);
+
+	// set the communication channel frequency
+	if (!rf95.setFrequency(FREQUENCY)) {
+		// this is bad, we failed to set the frequency, check datasheet
+		usart_print(MESSAGE_LIST[0x3]);
+		// endless loop, reboot the board
+		while (1) {}
+	}
+
+	// c/p from the Lora example, check in the datasheet before
+	// any change, *mainly* because we are dealing with "power"
+	// it may be related with voltage, careful
+	rf95.setTxPower(23, false);
+}
+
+int main() {
+
+	const char* test_message = "Hello, I'm alive\0";
+	unsigned char buf[RH_RF95_MAX_MESSAGE_LEN];
+	unsigned char len = sizeof(buf);
+
+	// initialize serial, pin, rf etc
+	init_transmitter();
+
+	usart_print(MESSAGE_LIST[0x4]);
+
+	// main loop
+	while (1) {
+
+		// send a message to receiver
+		usart_print(MESSAGE_LIST[0x5]);
+		_delay_ms(10);
+		rf95.send((uint8_t *)test_message, strlen(test_message));
+
+		// wait for the message to be send
+		usart_print(MESSAGE_LIST[0x6]);
+		_delay_ms(10);
+		rf95.waitPacketSent();
+
+		// let's wait now for the reply
+		usart_print(MESSAGE_LIST[0x7]);
+		_delay_ms(10);
+
+		if (rf95.waitAvailableTimeout(1000)) {
+
+			// read message received into the buffer
+			if (rf95.recv(buf, &len)) {
+			  usart_print(MESSAGE_LIST[0x8]);
+
+			  for (int i = 0; i < RH_RF95_MAX_MESSAGE_LEN; i++) {
+				  usart_send((char)buf[i]);
+			  }
+
+			  //usart_print("\nRSSI: \n\0");
+			  //Serial.println(rf95.lastRssi(), DEC);
+			} else {
+			  // something went wrong and we failed to read the message
+			  usart_print(MESSAGE_LIST[0x9]);
+			}
+		} else {
+			// timeout, no one sending message :(
+			usart_print(MESSAGE_LIST[0xA]);
+		}
+		_delay_ms(1000);
+	}
+
+	return 0;
+}
+						</code></pre>
+				</section>
+
+		<section>
+			<h2>Code</h2>
+				<p>transmissor_main.ino</p>
+					<pre><code class="hljs" data-trim data-line-numbers="8-14,16,18,21-25,29,36,47-49,55,58,62-74,80,82,89-92,94,96,99,100,103,105,107,109,111,115,117,118,120,123,125,127,128,133,134,136,138-140,143,145,148,152,154,157-159,162,163,165,168,169,170-173,177,179,180,181,183,184,185,186,188,189">
+/**
+ * Rocket data transmitter through RFM9X
+ * TODO: currently using Arduino SPI and Library RH_RF95 that uses C++ a lot
+ * This isn't a good idea as C++ uses object that uses lot of space and is a waste of cycles
+ * rewrite it.
+ */
+
+#include <SPI.h>
+#include <RH_RF95.h>
+#include <avr/io.h>
+#include <util/delay.h>
+#include <dht.h> //temperature and humidity dht11
+#include <stdio.h>
+#include <stdlib.h>
+
+dht DHT;
+
+#define DHT11_PIN 7
+
+//libraries and define for the wire digital temperature sensor DS18B20
+#include <OneWire.h>
+#include <DallasTemperature.h>
+#define ONE_WIRE_BUS 4 //data wire is plugged into pin 4 (I chose it)
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature SensorTemperatura(&oneWire);
+
+// custom serial library
+// because arduino library sucks
+#include "serial.h"
+
+/**
+ * Current frequency that we are transmitting information, if you want to change it
+ * *please* again read the datasheet to check the supported frequency
+ */
+
+#define FREQUENCY 915
+
+/**
+ * Layout:
+ * SS = Slave Select/Chip Select
+ * RST = Reset
+ * IRQ = Hardware Interrupt IRQ, ATmega328p uses Pin2 for hardware interrupt
+ * if you want to change it, *please* read the datasheet to make sure that the pin
+ * has support for hardware interrupt, kthx
+ */
+
+#define SS 10
+#define RST 9
+#define IRQ 2
+
+/**
+ *  Packet List for communication with server
+ */
+
+#define PACKET_ID_SENSORS 0
+
+// global object for rf95 board
+RH_RF95 rf95(SS, IRQ);
+
+// constant string should be in flash memory
+// don't need to be in SRAM, save memory and is better
+PGM_P const MESSAGE_LIST[0xB] PROGMEM = {
+  "[-] initializing transmissor\n\0",          // 0x0
+  "[-] error while initializing\n\0",          // 0x1
+  "[-] initialized\n\0",                       // 0x2
+  "[-] error while setting frequency\n\0",     // 0x3
+  "[-] starting main loop\n\0",                // 0x4
+  "[-] sending message to receiver\n\0",       // 0x5
+  "[-] delay for packet\n\0",                  // 0x6
+  "[-] waiting the reply\n\0",                 // 0x7
+  "[-] we got a message back\n\0",             // 0x8
+  "[-] failed to receive message\n\0",         // 0x9
+  "[-] no reply, anyone around?\n\0"           // 0xA
+};
+
+/**
+ *  Create a packet that will be transfered to the server
+ *  holding information about temperature and humidity
+ */
+void packet_sensors(unsigned char* packet) {
+   // read information
+   int chk = DHT.read11(DHT11_PIN);
+
+   // packet format:
+   // byte 0 -- ID
+   // byte 1 -- temperature
+   // byte 2 -- humidity
+
+   packet[0] = PACKET_ID_SENSORS;
+   packet[1] = DHT.temperature;
+   packet[2] = DHT.humidity;
+}
+
+inline void init_transmitter() {
+  // i/o init
+  init();
+
+  // reset the chip
+  pinMode (RST, OUTPUT);
+  digitalWrite(RST, HIGH);
+
+  // initialize serial
+  usart_start();
+  // wait 120ms so we can start
+  _delay_ms(120);
+
+  usart_print(MESSAGE_LIST[0x0]);
+
+  digitalWrite(RST, LOW);
+  _delay_ms(15);
+  digitalWrite(RST, HIGH);
+  _delay_ms(15);
+
+  // wait for lora initialize
+  while (!rf95.init()) {
+    // something bad happened, check the cables
+    usart_print(MESSAGE_LIST[0x1]);
+  }
+
+  usart_print(MESSAGE_LIST[0x2]);
+
+  // set the communication channel frequency
+  if (!rf95.setFrequency(FREQUENCY)) {
+    // this is bad, we failed to set the frequency, check datasheet
+    usart_print(MESSAGE_LIST[0x3]);
+    // endless loop, reboot the board
+    while (1) {}
+  }
+
+  // c/p from the Lora example, check in the datasheet before
+  // any change, *mainly* because we are dealing with "power"
+  // it may be related with voltage, careful
+  rf95.setTxPower(23, false);
+}
+
+int main() {
+
+  const char* test_message = "Hello, I'm alive\0";
+  unsigned char buf[RH_RF95_MAX_MESSAGE_LEN];
+  unsigned char len = sizeof(buf);
+
+  // initialize serial, pin, rf etc
+  init_transmitter();
+
+  usart_print(MESSAGE_LIST[0x4]);
+
+  // main loop
+  while (1) {
+
+   // send a message to receiver
+   // usart_print(MESSAGE_LIST[0x5]);
+    packet_sensors(buf);
+    _delay_ms(10);
+    rf95.send((uint8_t *)buf, RH_RF95_MAX_MESSAGE_LEN);
+
+    // wait for the message to be send
+    usart_print(MESSAGE_LIST[0x6]);
+    _delay_ms(10);
+    rf95.waitPacketSent();
+
+    // let's wait now for the reply
+    usart_print(MESSAGE_LIST[0x7]);
+    _delay_ms(10);
+
+    if (rf95.waitAvailableTimeout(1000)) {
+
+      // read message received into the buffer
+      if (rf95.recv(buf, &len)) {
+        usart_print(MESSAGE_LIST[0x8]);
+
+        for (int i = 0; i < RH_RF95_MAX_MESSAGE_LEN; i++) {
+          usart_send((char)buf[i]);
+        }
+
+        //usart_print("\nRSSI: \n\0");
+        //Serial.println(rf95.lastRssi(), DEC);
+      } else {
+        // something went wrong and we failed to read the message
+        usart_print(MESSAGE_LIST[0x9]);
+      }
+    } else {
+      // timeout, no one sending message :(
+      usart_print(MESSAGE_LIST[0xA]);
+    }
+    _delay_ms(1000);
+  }
+
+  return 0;
+}
+			</code></pre>
+		</section>
+
+		<section>
+			<h2>Code</h2>
+				<p>rocket_receiver.ino</p>
+					<pre><code class="hljs" data-trim data-line-numbers="8-11,15,22,33-35,42,46,51-63,66,68,71,72,75,77,79,81-84,87,89,90,92,95,97,99,100,105,106,108-112,115,117,120,121,123-136,139-141,146,148-154">
+/**
+ * Rocket data transmitter through RFM9X
+ * TODO: currently using Arduino SPI and Library RH_RF95 that uses C++ a lot
+ * This isn't a good idea as C++ uses object that uses lot of space and is a waste of cycles
+ * rewrite it.
+ */
+
+#include <SPI.h>
+#include <RH_RF95.h>
+#include <avr/io.h>
+#include <util/delay.h>
+
+// custom serial library
+// because arduino library sucks
+#include "serial.h"
+
+/**
+ * Current frequency that we are transmitting information, if you want to change it
+ * *please* again read the datasheet to check the supported frequency
+ */
+
+#define FREQUENCY 915
+
+/**
+ * Layout:
+ * SS = Slave Select/Chip Select
+ * RST = Reset
+ * IRQ = Hardware Interrupt IRQ, ATmega328p uses Pin2 for hardware interrupt
+ * if you want to change it, *please* read the datasheet to make sure that the pin
+ * has support for hardware interrupt, kthx
+ */
+
+#define SS 10
+#define RST 9
+#define IRQ 2
+
+
+/**
+ *  Packet List for communication with server
+ */
+
+#define PACKET_ID_SENSORS 0
+
+
+// global object for rf95 board
+RH_RF95 rf95(SS, IRQ);
+
+// constant string should be in flash memory
+// don't need to be in SRAM, save memory and is better
+// if you don't know what is PGM_P and PROGMEM is, google is your friend
+PGM_P const MESSAGE_LIST[0xB] PROGMEM = {
+  "[-] initializing receiver\n\0",             // 0x0
+  "[-] error while initializing\n\0",          // 0x1
+  "[-] initialized\n\0",                       // 0x2
+  "[-] error while setting frequency\n\0",     // 0x3
+  "[-] starting main loop\n\0",                // 0x4
+  "[-] message received\n\0",                  // 0x5
+  "[-] delay for packet\n\0",                  // 0x6
+  "[-] waiting the reply\n\0",                 // 0x7
+  "[-] we got a message back\n\0",             // 0x8
+  "[-] failed to receive message\n\0",         // 0x9
+  "[-] no reply, anyone around?\n\0"           // 0xA
+};
+
+
+inline void init_transmitter() {
+  // i/o init
+  init();
+
+  // reset the chip
+  pinMode (RST, OUTPUT);
+  digitalWrite(RST, HIGH);
+
+  // initialize serial
+  usart_start();
+  // wait 120ms so we can start
+  _delay_ms(120);
+
+  usart_print(MESSAGE_LIST[0x0]);
+
+  digitalWrite(RST, LOW);
+  _delay_ms(15);
+  digitalWrite(RST, HIGH);
+  _delay_ms(15);
+
+  // wait for lora initialize
+  while (!rf95.init()) {
+    // something bad happened, check the cables
+    usart_print(MESSAGE_LIST[0x1]);
+  }
+
+  usart_print(MESSAGE_LIST[0x2]);
+
+  // set the communication channel frequency
+  if (!rf95.setFrequency(FREQUENCY)) {
+    // this is bad, we failed to set the frequency, check datasheet
+    usart_print(MESSAGE_LIST[0x3]);
+    // endless loop, reboot the board
+    while (1) {}
+  }
+
+  // c/p from the Lora example, check in the datasheet before
+  // any change, *mainly* because we are dealing with "power"
+  // it may be related with voltage, careful
+  rf95.setTxPower(23, false);
+}
+
+int main() {
+  unsigned char buf[RH_RF95_MAX_MESSAGE_LEN];
+  unsigned char len = sizeof(buf);
+  char output_buffer[0x10];
+  memset(output_buffer, 0x0, 0x10);
+
+  // initialize serial, pin, rf etc
+  init_transmitter();
+
+  usart_print(MESSAGE_LIST[0x4]);
+
+  // main loop
+  while (1) {
+    if (rf95.available()) {
+      // read message received into the buffer
+      if (rf95.recv(buf, &len)) {
+        switch (buf[0]) {
+           case PACKET_ID_SENSORS: {
+              usart_print((const char*)"\ntemperature:\0");
+              itoa(buf[1], output_buffer, 10);
+              usart_print((const char*) output_buffer);
+              memset(output_buffer, 0x0, 0x10);
+              usart_print((const char*)"\nhumidade:\0");
+              itoa(buf[2], output_buffer, 10);
+              usart_print((const char*) output_buffer);
+              memset(output_buffer, 0x0, 0x10);
+           }
+           break;
+        }
+
+        // send message back
+        uint8_t data[] = "And hello back to you";
+        rf95.send(data, sizeof(data));
+        rf95.waitPacketSent();
+
+        //usart_print("\nRSSI: \n\0");
+        //Serial.println(rf95.lastRssi(), DEC);
+
+      } else {
+        // something went wrong and we failed to read the message
+        usart_print(MESSAGE_LIST[0x9]);
+      }
+    }
+    _delay_ms(10);
+  }
+  return 0;
+}
+
+				</code></pre>
+		  	 </section>
+
+		  	 <section>
+		  	 	<h2>Code</h2>
+				<p>serial.c</p>
+					<pre><code class="hljs" data-trim data-line-numbers="1,3,8,9,14,16,17,19,20,22,23,25,26,28-31,33,34,36,37">
+#include "serial.h"
+
+void usart_start() {
+
+/**
+ * Configure the baud rate prescale
+ */
+ UBRR0H  = (unsigned char)(USART_PRESCALE >> 8);
+ UBRR0L  = (unsigned char)(USART_PRESCALE & 0xFF);
+
+/**
+ * Enable USART hardware to recv and send data
+ */
+ UCSR0B |= (1 << RXEN0)  | (1 << TXEN0);
+
+ UCSR0C |= (1 << UCSZ00) | (1 << UCSZ01);
+}
+
+void usart_send(char data) {
+	while (!(UCSR0A & (1 << UDRE0))) {}
+
+	UDR0 = data;
+}
+
+void usart_print(const char *data) {
+	unsigned char i = 0;
+
+	while (data[i] != '\0') {
+		usart_send(data[i++]);
+	}
+}
+
+char usart_recv() {
+	while (!(UCSR0A & (1 << RXC0))) {}
+
+	return UDR0;
+}
+				</code></pre>
+		  	 </section>
+
+		  	 <section>
+		  	 	<h2>Code</h2>
+				<p>serial.h</p>
+					<pre><code class="hljs" data-trim data-line-numbers="1,2,4,6,8-14,16-22,24-30,32-38,40">
+#ifndef _SERIAL_H_
+#define _SERIAL_H_
+
+#include <avr/io.h>
+
+#define USART_PRESCALE (((F_CPU/(9600 * 16UL))) - 1)
+
+#ifdef __cplusplus
+	extern "C" {
+#endif
+void usart_start();
+#ifdef __cplusplus
+}
+#endif
+
+#ifdef __cplusplus
+	extern "C" {
+#endif
+void usart_send(char data);
+#ifdef __cplusplus
+}
+#endif
+
+#ifdef __cplusplus
+	extern "C" {
+#endif
+void usart_print(const char *data);
+#ifdef __cplusplus
+}
+#endif
+
+#ifdef __cplusplus
+	extern "C" {
+#endif
+char usart_recv();
+#ifdef __cplusplus
+}
+#endif
+
+#endif
+		  	 	</code></pre>
+		  	 </section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>

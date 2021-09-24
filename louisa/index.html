@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Let's RE</title>
+    <!-- <documentation at http://demos.jquerymobile.com/1.4.1/ > -->
+
+    <link rel="stylesheet" href="themes/pinktheme.min.css" />
+    <link rel="stylesheet" href="themes/pinktheme.css" />
+    <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script src="index.js"></script>
+</head>
+
+<body>
+    <!-- Start of Home page -->
+    <div data-role="page"  id="home">
+            <!--  login page header -->
+            <div data-role="header" data-theme='a'>
+               <!-- helpful location   -->
+              <!-- https://demos.jquerymobile.com/1.2.0/docs/toolbars/docs-navbar.html -->
+
+                <h1>Reverse Engineering</h1>
+                <div data-role="navbar"  data-theme='a'>
+                    <ul>
+                      <li><a href="#home">Home</a></li>
+                      <li><a href="#page1">RE in Android App</a></li>
+                      <li><a href="#page2">RE in Iphone</a></li>
+                      <li><a href="#page3">RE in Video Games</a></li>
+                      <li><a href="#page4">Web Security</a></li>
+                    </ul>
+                  </div><!-- /navbar -->
+            </div>
+            <!-- main page -->
+            <div data-role="content" data-theme='a'>
+               <h2>Hello darkness, my old friend</h2>
+               <p>There are several websites, tutorials, videos and books about information security. However, here is another site where you can self study and share knowledge for free.</p>
+               <p>Enjoy it.</p>
+            </div>
+              
+            <!-- page footer -->
+            <div data-role="footer" data-theme='a'>
+                    <h1>Copyrigtht 2020 by iamlouisa</h1>
+            </div>
+        </div>
+
+        <div data-role="page" id="page1">
+            <!--  page1 page header -->
+            <div data-role="header" data-theme='a'>
+              <h1>Reverse Engineering</h1>
+              <div data-role="navbar"  data-theme='a'>
+                  <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#page1">RE in Android App</a></li>
+                    <li><a href="#page2">RE in Iphone</a></li>
+                    <li><a href="#page3">RE in Video Games</a></li>
+                    <li><a href="#page4">Web Security</a></li>
+                  </ul>
+                </div><!-- /navbar -->
+          </div>
+            <!-- page content -->
+            <div data-role="content" data-theme='a'>
+              <ul>
+                <li><a href="https://github.com/OWASP/owasp-mstg/blob/master/Document/0x05c-Reverse-Engineering-and-Tampering.md">Tampering and Reverse Engineering on Android by OWASP</a></li>
+                <li><a href="http://opensecuritytraining.info/AndroidForensics.html">Android Forensics & Security Testing by Shawn Valle</a></li>
+                <li><a href="https://maddiestone.github.io/AndroidAppRE/">Reverse Engineering in Android Applications by Maddie Stone from Project Zero (Google Security Team)</a></li>
+              </ul>
+              Share the link <br />
+              <input type="text" value="" id="link" />
+              Enter the title <br />
+              <input type="text" value="" id="title" />
+              Enter the author <br />
+              <input type="text" value="" id="author" />
+              Enter position/company <br />
+              <input type="text" value="" id="position" />
+              <form>
+                  <div class="ui-field-contain">
+                  <label for="select-RE">Select a section</label>
+                  <select name="select-RE" id="select-RE">
+                      <option value="">Beginner</option>
+                      <option value="">Medium</option>
+                      <option value="">Advanced</option>
+                      <option value="">CVE</option>
+                  </select>
+                  </div>
+            </form>
+
+            <input type="button" value="Click To Add RE" id="buttonAdd"  data-inline="true" />
+                <input type="button" value="Clear Data" id="buttonClear"  data-inline="true" />
+            </div>
+              
+            <!--  newaccount page footer -->
+            <div data-role="footer" data-theme='a'>
+              <h1>Copyrigtht 2020 by iamlouisa</h1>
+            </div>
+        </div>
+
+
+
+    <!-- Start of gamelost page -->
+    <div data-role="page"  id="page2">
+            <!--  gamelost page header -->
+            <div data-role="header" data-theme='a'>
+              <h1>Reverse Engineering</h1>
+              <div data-role="navbar"  data-theme='a'>
+                  <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#page1">RE in Android App</a></li>
+                    <li><a href="#page2">RE in Iphone</a></li>
+                    <li><a href="#page3">RE in Video Games</a></li>
+                    <li><a href="#page4">Web Security</a></li>
+                  </ul>
+                </div><!-- /navbar -->
+          </div>
+            <!--  gamelost page content -->
+            <div data-role="content" data-theme='a'>
+              <ul>
+                <li><a href="https://azeria-labs.com/writing-arm-assembly-part-1/">Introduction to ARM Assembly Basics by Azeria</a></li>
+                <li><a href="https://www.youtube.com/playlist?list=PL-slHQxWd9GkhKu8oXXrIHFI_EoVHQqSA">iOS Exploitation/Security Research Tutorials by Billy Ellis</a></li>
+                <li><a href="https://media.ccc.de/v/36c3-11238-the_one_weird_trick_securerom_hates">The One Weird Trick SecureROM Hates by qwertyoruiop</a></li>
+                <li><a href="https://www.youtube.com/watch?v=_Is1mJLRyzg">Messenger Hacking: Remotely Compromising an iPhone through iMessage by Samuel Groß from Project Zero (Google Security Team)</a></li>
+              </ul>
+              Share the link <br />
+              <input type="text" value="" id="link" />
+              Enter the title <br />
+              <input type="text" value="" id="title" />
+              Enter the author <br />
+              <input type="text" value="" id="author" />
+              Enter position/company <br />
+              <input type="text" value="" id="position" />
+              <form>
+                  <div class="ui-field-contain">
+                  <label for="select-RE">Select a section</label>
+                  <select name="select-RE" id="select-RE">
+                    <option value="">Beginner</option>
+                    <option value="">Medium</option>
+                    <option value="">Advanced</option>
+                    <option value="">CVE</option>
+                  </select>
+                  </div>
+            </form>
+
+            <input type="button" value="Click To Add RE" id="buttonAdd"  data-inline="true" />
+                <input type="button" value="Clear Data" id="buttonClear"  data-inline="true" />
+            </div>
+              
+            <!--  gamelost page footer -->
+            <div data-role="footer" data-theme='a'>
+              <h1>Copyrigtht 2020 by iamlouisa</h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start of gamewon page -->
+    <div data-role="page"  id="page3">
+            <!--  gamewon page header -->
+            <div data-role="header" data-theme='a'>
+              <h1>Reverse Engineering</h1>
+              <div data-role="navbar"  data-theme='a'>
+                  <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#page1">RE in Android App</a></li>
+                    <li><a href="#page2">RE in Iphone</a></li>
+                    <li><a href="#page3">RE in Video Games</a></li>
+                    <li><a href="#page4">Web Security</a></li>
+                  </ul>
+                </div><!-- /navbar -->
+          </div>
+            <!--  gamewon page content -->
+            <div data-role="content" data-theme='a'>
+              <ul>
+                <li><a href="https://bunniefoo.com/nostarch/HackingTheXbox_Free.pdf">Hacking The Xbox by Andrew "bunnie" Huang</a></li>
+                <li><a href="https://github.com/dekuNukem/Nintendo_Switch_Reverse_Engineering">Nintendo Switch Reverse Engineering by dekuNukem</a></li>
+              </ul>
+              Share the link <br />
+              <input type="text" value="" id="link" />
+              Enter the title <br />
+              <input type="text" value="" id="title" />
+              Enter the author <br />
+              <input type="text" value="" id="author" />
+              Enter position/company <br />
+              <input type="text" value="" id="position" />
+              <form>
+                  <div class="ui-field-contain">
+                  <label for="select-RE">Select a section</label>
+                  <select name="select-RE" id="select-RE">
+                    <option value="">Beginner</option>
+                    <option value="">Medium</option>
+                    <option value="">Advanced</option>
+                    <option value="">CVE</option>
+                  </select>
+                  </div>
+            </form>
+
+            <input type="button" value="Click To Add RE" id="buttonAdd"  data-inline="true" />
+                <input type="button" value="Clear Data" id="buttonClear"  data-inline="true" />
+            </div>
+              
+            <!--  gamewon page footer -->
+            <div data-role="footer" data-theme='a'>
+              <h1>Copyrigtht 2020 by iamlouisa</h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start of gamewon page -->
+    <div data-role="page"  id="page4">
+      <!--  gamewon page header -->
+      <div data-role="header" data-theme='a'>
+        <h1>Reverse Engineering</h1>
+        <div data-role="navbar"  data-theme='a'>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#page1">RE in Android App</a></li>
+            <li><a href="#page2">RE in Iphone</a></li>
+            <li><a href="#page3">RE in Video Games</a></li>
+            <li><a href="#page4">Web Security</a></li>
+          </ul>
+        </div><!-- /navbar -->
+    </div>
+      <!--  gamewon page content -->
+      <div data-role="content" data-theme='a'>
+        <li><a href="https://www.slideshare.net/nragupathy/introduction-to-web-application-security-blackhoodie-us-2018">Introduction to Web Application Security by Niranjanaa Ragupathy</a></li>
+        <li><a href="https://canseiiiiii.tumblr.com/">XSS on Tumblr by iamlouisa</a></li>
+        Share the link <br />
+              <input type="text" value="" id="link" />
+              Enter the title <br />
+              <input type="text" value="" id="title" />
+              Enter the author <br />
+              <input type="text" value="" id="author" />
+              Enter position/company <br />
+              <input type="text" value="" id="position" />
+              <form>
+                  <div class="ui-field-contain">
+                  <label for="select-RE">Select a section</label>
+                  <select name="select-RE" id="select-RE">
+                    <option value="">Beginner</option>
+                    <option value="">Medium</option>
+                    <option value="">Advanced</option>
+                    <option value="">CVE</option>
+                  </select>
+                  </div>
+            </form>
+
+            <input type="button" value="Click To Add RE" id="buttonAdd"  data-inline="true" />
+                <input type="button" value="Clear Data" id="buttonClear"  data-inline="true" />
+      </div>
+        
+      <!--  gamewon page footer -->
+      <div data-role="footer" data-theme='a'>
+        <h1>Copyrigtht 2020 by iamlouisa</h1>
+      </div>
+  </div>
+</div>
+
+</body>
+</html>

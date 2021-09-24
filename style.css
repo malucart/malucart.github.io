@@ -1,0 +1,249 @@
+*{
+    /*margin: 0;*/
+    padding: 0;
+}
+
+html, button, input, select, textarea {
+    font-family: sans-serif;
+}
+
+body {
+    height: 100%;
+    background: #fff;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0);
+    color: #8b8181;
+    @font-face {
+          font-family: "geosanslightregular";
+          src: url("geosanslight-webfont.eot?#iefix") format("embedded-opentype"), url("geosanslight-webfont.woff") format("woff"), url("geosanslight-webfont.ttf") format("truetype"), url("geosanslight-webfont.svg#geosanslightregular") format("svg");
+          font-style: normal;
+          font-weight: normal;
+    }
+}
+
+h1 {
+    font-size: 3em;
+    margin: 0.67em 0;
+}
+
+h2 {
+    font-size: 2em;
+    margin: 0.83em 0;
+}
+
+h3 {
+    font-size: 1.5em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+h4 {
+    font-size: 1.4em;
+    margin: 0em 0;
+}
+
+h5 {
+    font-size: 0.83em;
+    margin: 1.67em 0;
+}
+
+h6 {
+    font-size: 0.67em;
+    margin: 2.33em 0;
+}
+
+abbr[title] {
+    border-bottom: 1px dotted;
+}
+
+.media {
+    clear: both;
+    max-width: 820px;
+    margin: 10px auto;
+    color: #333;
+    text-align: center;
+    padding: 0.5em 0 0 0;
+}
+
+.icon-twitter,
+.icon-linkedin,
+.icon-youtube,
+.icon-github {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin: 2px;
+}
+
+.icon-twitter:hover,
+.icon-linkedin:hover,
+.icon-youtube:hover,
+.icon-github:hover {
+    background-position: bottom right;
+}
+
+.icon-github {
+    background: transparent url('/images/github.png') top left no-repeat;
+}
+
+.icon-youtube {
+    background: transparent url('/images/youtube.png') top left no-repeat;
+}
+
+.icon-linkedin {
+    background: transparent url('/images/linkedin.png') top left no-repeat;
+}
+
+.icon-twitter {
+    background: transparent url('/images/twitter.png') top left no-repeat;
+}
+
+@media (min-width: 400px) {
+
+}
+
+.resume h3 {
+    font-family: "fontin_regular"; 
+}
+
+@media (min-width: 550px) {
+    .resume-date,
+    .resume-date-border {
+        width: 210px;
+        display: table-cell;
+        text-align: right;
+        font-size: 1.3em;
+    }
+    .resume-date-border {
+        border-right: 1px solid #000;
+        border-bottom: none;
+    }
+    .resume-details {
+        display: table-cell;
+        margin-left: 0;
+    }
+    .resume-section {
+        font-size: 1.7em;
+    }
+}
+
+@media (min-width: 670px) {
+    .custom-menu {
+        text-align: left;
+    }
+    .menu-heading {
+        display: inline-block;
+    }
+    .custom-menu ul {
+        float: right;
+        margin-top: 2em;
+    }
+    .media {
+        text-align: right;
+    }
+}
+
+.pure-button {
+    margin: 20px 0;
+}
+
+.header {
+    max-width: 820px;
+    margin: auto;
+    color: #333;
+    text-align: center;
+    padding: 1em 0.5em 0 0.5em;
+    border-bottom: 1px solid #eee;
+}
+.small {
+    margin: 0 auto;
+    padding: 0 1em;
+    max-width: 20px;
+    margin-bottom: 20px;
+    line-height: 2.1em; 
+}
+.img {
+    margin: 0 auto;
+    padding: 0 1em;
+    max-width: 820px;
+    margin-bottom: 50px;
+    line-height: 2.1em; 
+}
+
+.img {
+    text-align: left;
+}
+
+
+.custom-menu {
+    text-align: left;
+}
+
+.custom-menu {
+    text-align: center;
+    position: relative;
+}
+
+.custom-menu ul {
+    width: 100%;
+    display: inline-block;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.custom-menu a {
+    color: #777;
+    line-height: 1.5em;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.custom-menu li a {
+    display: block;
+    cursor: pointer;
+    padding: 0 0;
+    margin: 1px 1px;
+    border: 1px solid #999;
+    border: none rgba(0, 0, 0, 0);
+    background-color: #E6E6E6;
+    text-decoration: none;
+    border-radius: 2px;
+}
+ 
+nav {
+  margin: 50px;
+}
+ 
+li  {
+/*height: 23px; */
+  float: left;
+  margin-right: 0px;
+/*border-right: 0.3px solid #aaa; */
+  padding: 0 10px;
+}
+ 
+li:last-child {
+  border-right: none;
+}
+ 
+li a {
+  text-decoration: none;
+  color: #ccc;
+  font: "geosanslightregular;
+  text-transform: uppercase;
+ 
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+ 
+li a:hover {
+  color: #666;
+}
+ 
+li.active a {
+  font-weight: 400;
+  color: #333;
+}
+

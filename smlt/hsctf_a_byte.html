@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+
+<!-- Inspired by Benedikt Bitterli!! -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="louisa website">
+
+    <link rel="stylesheet" href="../css/pure.css">
+
+    <meta property="og:title" content="A Byte"/>
+    <meta itemprop="name" content="A Byte"/>
+    <!---
+    <meta property="og:image" content="smlt.jpg"/>
+    <meta itemprop="image" content="smlt.jpg"/>
+    <meta name="twitter:image" content="smlt.jpg">
+    <meta property="og:site_name" content="louisa website"/>
+    <meta property="og:description" content="Light transport is a complex problem with many solutions. Practitioners are now faced with the difficult task  ..."/>
+    <meta itemprop="description" content="Light transport is a complex problem with many solutions. Practitioners are now faced with the difficult task  ..."/>
+    --->
+
+    <title>A Byte</title>
+</head>
+
+<body>
+    <div class="header">
+        <div class="custom-menu">
+            <a class="menu-heading" href="../index.html">louisa</a>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../portfolio.html">Projects</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="media">
+        <a href="https://github.com/malucart" class="icon-github" target="_blank"></a>
+        <a href="https://twitter.com/malumpalumpa" class="icon-twitter" target="_blank"></a>
+        <a href="https://youtube.com/c/MaluCartaxo" class="icon-youtube" target="_blank"></a>
+    </div>
+
+    <div class="project-page">
+        <h2 class="center" style="margin-bottom: 0.35em">A Byte</h2>
+
+        <p>If you're a beginner in reverse engineering, maybe you're in the right place. I'm going to explain this challenge for who doesn't understand anything about x64 assembly and how to convert the binary to C, and then, find the flag with python.</p>
+        <p>I'm using IDA so when I open this binary, this is what appear: </p>
+
+        <div class="img-strip" style="text-align: center;">
+            <a href="images/part1.png" target="_blank">
+                <img class="responsive-image" src="images/part1.png" alt="Part1" style="max-width: 60%;"></a>
+        </div>
+
+        <p>Ok, but what does that mean? </p>
+        <p>It means that we have the <span style="color: #F7AAFF;">crt0</span> and <span style="color: #F7AAFF;">main</span>. <span style="color: #F7AAFF;">crt0</span> is the first thing that the program does to initialize the stack, store initialized variables (but no local static variables) into the data section, clear uninitialized global and static variables into the bss section, and jump to the main function. Basically, we have any global variable saved in the stack and also a memory space to run the main. Let's focus on the <span style="color: #F7AAFF;">main</span>.</p>
+
+        <div class="img-strip" style="text-align: center;">
+            <a href="images/part2.png" target="_blank">
+                <img class="responsive-image" src="images/part2.png" alt="Part2" style="max-width: 40%;"></a>
+        </div>
+        <div class="img-strip" style="text-align: center;">
+            <a href="images/part3.png" target="_blank">
+                <img class="responsive-image" src="images/part3.png" alt="Part3" style="max-width: 40%;"></a>
+        </div>
+
+        <ul>
+            <li>byte -> reserved 1 byte or 8 bits in memory;</li>
+            <li>word -> reserved 2 bytes or 16 bits in memory;</li>
+            <li>dword -> reserved 4 bytes or 32 bits in memory;</li>
+            <li>qword -> reserved 8 bytes or 64 bits in memory.</li>
+        </ul>
+
+        <p><span style="color: #F7AAFF;">push  &nbsp; &nbsp; rbp</span> &nbsp;; push the memory address of the register base pointer (rbp) to the stack frame.</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; &nbsp; rbp, rsp</span> &nbsp;; copies the memory address of the register stack pointer (rsp) to the top of the current stack frame, which is rbp. Now both rsp and rbp are equal and on the top of the stack.</p>
+        <p><span style="color: #F7AAFF;">sub  &nbsp; &nbsp; rsp, 50h</span> &nbsp;; creates a space to store local variables. This space is 50h (base-16, or hexadecimal) or 80 (base-10, or decimal) or 'P' (as a character in ASCII Table). It's going to be on the top of the stack.</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; [rbp+var_44], edi</span> &nbsp;; there is a calling convention for registers. In order, they are: rdi/edi, rsi/esi, rdx/edx, rcx/ecx, r8 and r9. These registers are used for integer and memory address arguments. So, in this case, the program puts the first 32-bit register (edi) into the offset, which is the relative address from the beginning of memory segment where the variable is stored. It means that offset is the distance between the base address and the byte we’re interested (var_44, a local variable). This local variable it's going to be argc (argument count), which contains the number of arguments passed to the program. </p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; [rbp+var_50], rsi</span> &nbsp;; the program puts the second 64-bit register (rsi) into the offset of var_50 (another local variable) which is going to be argv[] (argument vector). And, now it makes sense to use rsi than esi, because the program wants more memory space to a vector.</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; &nbsp; rax, fs:28h</span> &nbsp;; it's the stack canaries, which it necessary to detect a stack buffer overflow before execution of malicious code can occur.</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; [rbp+var_8], rax</span> &nbsp;; the program puts 64-bit register rax into the offset of var_8.</p>
+        <p><span style="color: #F7AAFF;">xor  &nbsp; &nbsp; eax, eax</span> &nbsp;; xor as a assembly instruction can be used to clear a register. The reason is because equal numbers like 1 xor 1, or 0 xor 0, have 0 as a result. So, if I have 1101 xor 0010, the result is 0. Xor instruction executes faster than mov instruction. However, why is the reason to clear the register? The program clear the register because the variables are stored in their places, consequently, we don't need to use the registers anymore. Let's save memory, right? Another question: why does it clean 32-bit register eax but no 64-bit register rax? Because both have the same result, so if we use 32-bit register it will use less bit to process.</p>
+        <p><span style="color: #F7AAFF;">cmp  &nbsp; &nbsp; [rbp+var_44], 2</span> &nbsp;; compares the integer value argc by the user with the value 2.</p>
+        <p><span style="color: #F7AAFF;">jz   &nbsp; &nbsp; short loc_77B</span> &nbsp;; jumps to loc_77B function if the comparation results in zero (in other words, if the comparation between these two values are equal). "short" means that the jump can be encoded as 2 bytes with a distance range between -128 to +127 bytes.</p>
+        <p>After this last instruction, you can see two lines: red and green. Now, let's expand it and substitute var_44 = argc and var_50 = argv: </p>
+
+        <div class="img-strip" style="text-align: center;">
+            <a href="images/part4.png" target="_blank">
+                <img class="responsive-image" src="images/part4.png" alt="Part4" style="max-width: 100%;"></a>
+        </div>
+
+        <p>If we follow the red line:</p>
+        <p><span style="color: #F7AAFF;">nop</span> &nbsp;; the comparation doesn't result in zero.</p>
+        <p><span style="color: #F7AAFF;">jmp  &nbsp; &nbsp; short loc_765</span> &nbsp;; jumps to loc_765 function.</p>
+        <p>It goes to blue line:</p>
+        <p><span style="color: #F7AAFF;">loc_765:  &nbsp;</span> &nbsp;; loc_765 function.</p>
+        <p><span style="color: #F7AAFF;">lea  &nbsp; &nbsp; rdi, s</span> &nbsp;; the lea instruction places the address specified by rdi in "s" value, which is a string <em>u do not know da wae</em>.</p>
+        <p><span style="color: #F7AAFF;">call  &nbsp; _puts</span> &nbsp;; calls the puts string function which display that message on the screen.</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; eax, 0FFFFFFFFh</span> &nbsp;; copies -1 (0FFFFFFFFh) to 32-bit register eax. It uses just few bytes as possible to be friendly with the cache.</p>
+        <p><span style="color: #F7AAFF;">jmp  &nbsp; loc_891</span> &nbsp;; jumps to loc_891 function.</p>
+        <p>It goes to blue line: </p>
+        <p><span style="color: #F7AAFF;">loc_891:  &nbsp;</span> &nbsp;; loc_891 function.</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; &nbsp; rsi, [rbp+var_8]</span> &nbsp;; the offset value of var_8 is copied to 64-bit register rsi.</p>
+        <p><span style="color: #F7AAFF;">xor  &nbsp; &nbsp; rsi, fs:28h</span> &nbsp;; xor instruction to clear the space used to stack canaries.</p>
+        <p><span style="color: #F7AAFF;">jz  &nbsp; short locret_8A5</span> &nbsp;; jumps to locret_8A5 function if the comparation results in zero.</p>
+        <p>If it goes to red line:</p>
+        <p><span style="color: #F7AAFF;">call  &nbsp; ___stack_chk_fail</span> &nbsp;; aborts the function that called it with a message that a stack overflow has been detected and the program exits.</p>
+        <p>Else if goes to green line:</p>
+        <p><span style="color: #F7AAFF;">locret_8A5:  &nbsp;</span> &nbsp;; goes to locret_85A function, and, in brief, the program finishes. </p>
+        <br />
+        <p>Now, <strong>let's come back</strong> to the ending of the main function (or to the beginning of the up image) and go to green line: </p>
+        <p><span style="color: #F7AAFF;">loc_77B:  &nbsp;</span> &nbsp;; loc_77B function.</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; rax, [rbp+argv]</span> &nbsp;; as you remember, 64-bit register rax is clear and now the program can use it to store argv's memory address.</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; rax, [rax+8]</span> &nbsp;; it's expanding +8 bytes into the memory space.</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; [rbp+s], rax</span> &nbsp;; string "s" receives register rax value.</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; rax, [rbp+s]</span> &nbsp;; now, rax receive the string "s" value.</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; rdi, rax</span> &nbsp;; 64-bit register rdi receives 64-bit register rax value.</p>
+        <p><span style="color: #F7AAFF;">call  &nbsp; _strlen</span> &nbsp;; calls the strlen function, which calculates the length of a given string (in this case it's the length of string "s").</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; [rbp+var_3C], eax</span> &nbsp;; stores 32-bit register eax into the offset of var_3C.</p>
+        <p><span style="color: #F7AAFF;">cmp  &nbsp; [rbp+var_3C], 23h</span> &nbsp;; compares 23h and rbp+var_3C.</p>
+        <p><span style="color: #F7AAFF;">jnz  &nbsp; short loc_761</span> &nbsp;; if the previous comparation doesn't return 0, jump to loc_761.</p>
+        <p>If it goes to red line:</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; [rbp+var_40], 0</span> &nbsp;; stores 0 into the memory address of var_40.</p>
+        <p><span style="color: #F7AAFF;">jmp  &nbsp; short loc_7CD</span> &nbsp;; the jmp instruction performs an unconditional jump. It's just jump to another location that, in this case, is loc_7CD function. </p>
+        <p>It goes to blue line:</p>
+        <p><span style="color: #F7AAFF;">loc_7CD:  &nbsp; </span>&nbsp;; loc_7CD function.</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; eax, [rbp+var_40]</span> &nbsp;; 32-bit register eax receives the memory address of var_40.</p>
+        <p><span style="color: #F7AAFF;">cmp  &nbsp; eax, [rbp+var_3C]</span> &nbsp;; compares 32-bit register eax with the memory address of var_3C.</p>
+        <p><span style="color: #F7AAFF;">jl  &nbsp; short loc_7A5</span> &nbsp;; if the condition is met, jump to loc_7A5.</p>
+        <p>If it goes to green line:</p>
+        <p><span style="color: #F7AAFF;">loc_7A5:  &nbsp; </span> &nbsp;; loc_7A5 function.</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; eax, [rbp+var_40]</span> &nbsp;; 32-bit register receives memory address of var_40.</p>
+        <p><span style="color: #F7AAFF;">movsxd  &nbsp; rdx, eax</span> &nbsp;; movsxd moves the dword by sign extending the dword into qword. So, for this case, it's going to expand the memory space of the 64-bit register rdx with the 32-bit register eax. It results in 4 bytes more into the memory space of rdx.</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; rax, [rbp+s]</span> &nbsp;; 64-bit register rax receives memory address of string "s".</p>
+        <p><span style="color: #F7AAFF;">add  &nbsp; rax, rdx</span> &nbsp;; 64-bit register rax plus 64-bit register rdx.</p>
+        <p><span style="color: #F7AAFF;">movzx  &nbsp; ecx, byte ptr [rax]</span> &nbsp;; 32-bit register ecx receives 1 byte (or 8 bits) from 64-bit register rax, and movzx produces zero-extension in the rest of the bits, which are 24 (32 - 8) bits with 0. </p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; eax, [rbp+var_40]</span> &nbsp;; 32-bit register eax receives the memory address of var_40.</p>
+        <p><span style="color: #F7AAFF;">movsxd  &nbsp; rdx, eax</span> &nbsp;; movsxd moves the dword by sign extending the dword into qword. So, for this case, it's going to expand the memory space of the 64-bit register rdx with the 32-bit register eax. It results in 4 bytes more into the memory space of rdx.</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp;  rax, [rbp+s]</span> &nbsp;; 64-bit register rax receives memory address of string "s".</p>
+        <p><span style="color: #F7AAFF;">add  &nbsp;  rax, rdx</span> &nbsp;; 64-bit register rax value plus 64-bit register rdx value.</p>
+        <p><span style="color: #F7AAFF;">xor  &nbsp;  ecx, 1</span> &nbsp;; 32-bit register ecx xor 1. If it's equal, result = 0. Else, result = 1.</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; edx, ecx</span> &nbsp;; 32-bit register edx value receives 32-bit register ecx value.</p>
+        <p><span style="color: #F7AAFF;">mov  &nbsp; [rax], dl</span> &nbsp;; memory address of 64-bit register rax is the value of the 8-bit register bl.</p>
+        <p><span style="color: #F7AAFF;">add   &nbsp; [rbp+var_40], 1</span> &nbsp;; memory address of var_40 plus 1.</p>
+        <p>It goes back to loc_7CD.</p>
+        <p>In brief, we can conclude that loc_7A5 function is doing a for loop to add 1 until the comparation between 32-bit register eax with the memory address of var_3C are matched.</p>
+        <br />
+        <p><strong>After loc_7CD function, instead of following to the green line, it follows to the red line</strong>:</p>
+        <p>There are a huuuuuge mov instructions. All of them are used to store byte values, in other words, char. Basically, the program organize a space in memory for all these values into a string. And, in the end, it jumps to loc_764 function if it's not return something different from zero.</p>
+
+        <br />
+        <p>Ok, we had some idea about how the binary file works in x64 assembly language. In order that, let's see how IDA has organized the pseudocode in C.</p>
+
+        <div class="img-strip" style="text-align: center;">
+            <a href="images/part5.png" target="_blank">
+                <img class="responsive-image" src="images/part5.png" alt="Part5" style="max-width: 60%;"></a>
+        </div>
+
+        <p>And, of course, we can do better:</p>
+        <div class="img-strip" style="text-align: center;">
+            <a href="images/part6.png" target="_blank">
+                <img class="responsive-image" src="images/part6.png" alt="Part6" style="max-width: 100%;"></a>
+        </div>
+        <p>However, just C code is not enough. We need to convert bytes to string to get the flag. That's why we use python now.</p>
+        <div class="img-strip" style="text-align: center;">
+            <a href="images/part7.png" target="_blank">
+                <img class="responsive-image" src="images/part7.png" alt="Part7" style="max-width: 100%;"></a>
+        </div>
+
+        <p>We got the flag!</p>
+        <div class="img-strip" style="text-align: center;">
+            <a href="images/part8.png" target="_blank">
+                <img class="responsive-image" src="images/part8.png" alt="Part8" style="max-width: 55%;"></a>
+        </div>
+
+        <p>Also, it was just an alternative way (mine) to find the flag. However, the challenge gave us a python code using z3 (Microsoft tools) library to find the flag in this another way.</p>
+        <div class="img-strip" style="text-align: center;">
+            <a href="images/part9.png" target="_blank">
+                <img class="responsive-image" src="images/part9.png" alt="Part9" style="max-width: 100%;"></a>
+        </div>
+        <p>Finally, same flag:</p>
+        <div class="img-strip" style="text-align: center;">
+            <a href="images/part10.png" target="_blank">
+                <img class="responsive-image" src="images/part10.png" alt="Part10" style="max-width: 50%;"></a>
+        </div>
+
+
+
+    </div>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-58447839-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</body>
+</html>

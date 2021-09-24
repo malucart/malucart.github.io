@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+
+<!-- Inspired by Benedikt Bitterli!! -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="louisa website">
+
+    <title>Neural Network</title>
+
+    <link rel="stylesheet" href="../css/pure.css">
+</head>
+
+<body>
+    <div class="header">
+        <div class="custom-menu">
+            <a class="menu-heading" href="../index.html">louisa</a>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../portfolio.html">Projects</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="media">
+        <a href="https://github.com/malucart" class="icon-github" target="_blank"></a>
+        <a href="https://twitter.com/malumpalumpa" class="icon-twitter" target="_blank"></a>
+        <a href="https://youtube.com/c/MaluCartaxo" class="icon-youtube" target="_blank"></a>
+    </div>
+
+    <div class="project-page">
+        <h2 class="center" style="margin-bottom: 0.35em">Neural Network</h2>
+
+        <p>This project has been created to develop a program using Multilayer Perceptron (MLP) to find an accurate diagnosis of respiratory disease from the symptoms presented by the patient. A MLP is a class of feedforward artificial neural network, also it consists of at least three layers of nodes: an input layer, an output layer and a hidden layer.</p>
+
+        <p>About finding the disease that most closely matches the symptoms presented by the patient, the program asks twenty-one questions to the user to get the system inputs. The symptoms are in our database, which differentiate each disease. Thus, the user would only answer 1 for yes and 0 for no, if they had the symptom or not. At the end of this, the system returns to the user the respiratory disease corresponding to the symptoms presented, among the eleven respiratory diseases registered in our bank.</p>
+
+        <p>These diseases and symptoms are:</p>
+        <p>1 - Asthma: cough, body pain, wheezing, shortness of breath and is transient;</p>
+        <p>2 - Acute bronchitis: cough, mucus sputum, bronchial narrowing, malaise, sore throat and headache;</p>
+        <p>3 - Chronic bronchitis: cough, wheezing, shortness of breath, expectoration of mucus, sore throat, fever, headache and is long lasting;</p>
+        <p>4 - Acute sinusitis: cough, body pain, mucus expectoration, malaise, fever, headache, nasal obstruction and facial pain;</p>
+        <p>5 - Chronic sinusitis: cough, body pain, mucus expectoration, malaise, fever, headache, runny nose, long duration, nasal obstruction and facial pain;</p>
+        <p>6 - Rhinitis: malaise, runny nose, nasal obstruction and sneezing;</p>
+        <p>7 - Pneumonia: cough, body pain, shortness of breath, mucus expectoration, malaise, fever, mental confusion, chills and coughing up blood;</p>
+        <p>8 - Tuberculosis: cough, mucus sputum, malaise, fever, long-term, bloody cough, weight loss and night sweats;</p>
+        <p>9 - Pulmonary emphysema: cough, shortness of breath, expectoration of mucus, narrowing of the bronchi, malaise and weight loss;</p>
+        <p>10 - Pertussis: cough, shortness of breath, mucus expectoration, malaise, fever, runny nose, long duration, nasal obstruction and sneezing;</p>
+        <p>11 - Flu: Cough, shortness of breath, mucus expectoration, malaise, sore throat, fever, passenger, runny nose, nasal obstruction and sneezing.</p>
+
+        <p>This database was divided into two matrices of 0 and 1, where the first matrix represents the symptoms of each disease in the form of a vector, each of which had only 1 row and 21 columns, one disease and eleven symptoms. composing an 11x21 matrix, in the second matrix we assigned an index to each disease in binary form, but with 11 digits, as there were eleven diseases, so the matrix was 21x11, as can be seen here:</p>
+
+        <div class="img-strip">
+            <a href="matrix.png" target="_blank"><img class="responsive-image" src="matrix.png" alt="Matrix"/></a>
+        </div>
+        <!---
+        <p class="caption wall-of-text tight-top">We show a cloud rendered with a traditional exponential transmittance (left) and with a non-exponential, long-tailed transmittance curve (right). The non-exponential transmittance leads to both deeper light penetration as well as a softer appearance near the surface, allowing for a richer appearance.</p>
+        --->
+
+        <p>This database needed to have its basic structure modified to have more possibilities of variations of the same disease, so for this reason I could have greater precision and more adequate training, enabling the machine to identify diseases that it never saw in its database, being attributed thus more vector lines of the same disease, so we worked with a base of 60 samples, 49 for training and 11 for testing.</p>
+
+        <p><center>Code explanation!</center></p>
+
+        <p>Sigmoid Function is the activation function, so I put it in: </p>
+
+        <div class="img-strip">
+            <a href="sigmoid.png" target="_blank"><img class="responsive-image" src="sigmoid.png" alt="Sigmoid Function" width="240px" height="240px"/></a>
+        </div>
+
+        <p>The learning rate is the constant that tells you how fast the network converges, or rather how fast it changes weights. I define it as 0.01.</p>
+
+        <p>Iterative mode changes the weights for each sample. It is represented as follows:</p>
+
+        <div class="img-strip">
+            <a href="weight.png" target="_blank"><img class="responsive-image" src="weight.png" alt="Changing the Weight" width="450px" height="450px"/></a>
+        </div>
+
+        <p>The code was made with three hidden layers because if it had more than that the error value, which is in the gradient, is lost because of the large numbers of layers. As a code example, I show the backpropagation of the part with a single hidden layer (the simplest still MLP):</p>
+
+        <div class="img-strip">
+            <a href="backpropagation1.png" target="_blank"><img class="responsive-image" src="backpropagation1.png" alt="Back Propagation" width="600px" height="600px"/></a>
+        </div>
+
+        <div class="img-strip">
+            <a href="backpropagation2.png" target="_blank"><img class="responsive-image" src="backpropagation2.png" alt="Back Propagation" width="600px" height="600px"/></a>
+        </div>
+
+        <p><center>Best Convergences:</center></p>
+
+        <p>A hidden layer: 15 neurons; 40000 times; 10^(-4) MSE in training; 10^(-3) MSE in testing</p>
+
+        <p>Two hidden layers: 15 + 8 neurons; 50000 times; 10^(-4) MSE in training; 10^(-3) MSE in testing</p>
+
+        <p>Finally, I obtained great precision in the results, with a mean square error (MSE) in the range of 0.001 and an accuracy of 99,999 (that's an excellent value!). As we can see in the image below, I have the 11 tests that were made to verify the accuracy of the machine to evaluate symptoms never seen by the database, because the vector of these symptoms was removed from the database and placed only for tests, but that characterized that disease to find out if for that entry actually matches the expected disease.</p>
+
+        <div class="img-strip">
+            <a href="MachineLearning.jpg" target="_blank"><img class="responsive-image" src="MachineLearning.jpg" alt="Back Propagation"/></a>
+        </div>
+
+        <p class="caption wall-of-text tight-top">We have in the first line the input vector of the test symptoms, then we have the expected disease for that symptom, right after leaving the system and therefore the remaining tests for the rest. Soon after these results are presented, the user is asked to answer the symptom questionnaire to get their specific disease.</p>
+
+        <!---
+        <h3><b>Downloads</b></h3>
+        <p class="list-title"><b>Publication</b><br/></p>
+        <ul>
+            <li><a href="bitterli18framework.pdf">Paper (39 MB)</a></li>
+        </ul>
+        <p class="list-title"><b>Supplemental</b><br/></p>
+        <ul>
+            <li><a href="bitterli18framework-supplemental.pdf">Supplemental Document (590 KB)</a></li>
+            <li><a href="bitterli18framework.mp4">Supplemental Video (47 MB)</a></li>
+            <li><a href="nec-presentation.mp4">Presentation Video (76 MB)</a></li>
+            <li><a href="https://cs.dartmouth.edu/~wjarosz/publications/bitterli18framework-supplemental/index.html">Online results with interactive viewer (may load slowly)</a></li>
+            <li><a href="bitterli18framework-supplemental.zip">Supplemental material with interactive viewer (459 MB)</a></li>
+            <li><a href=https://www.cs.dartmouth.edu/~trdata/reports/abstracts/TR2018-841>Early tech-report version of the paper (Warning: significantly different theory!)</a>
+            <!--<li><a href="https://github.com/tunabrain/tungsten/"
+            target="_blank">Open Source Implementation</a></li>
+        </ul>
+
+        <p class="list-title"><b>Presentation Video (contains narration)</b><br/></p>
+        <div>
+            <video class="responsive-image" controls="controls" src="nec-presentation.mp4"></video>
+        </div>
+         --->
+    </div>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','http://www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-58447839-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</body>
+
+<!-- Mirrored from benedikt-bitterli.me/nec/ by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 04 Oct 2019 08:55:18 GMT -->
+</html>
