@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <div style={{
-      minHeight: '100vh',
+      flex: 1,
       background: 'linear-gradient(135deg, #ffffff 0%, #F4A7B9 100%)',
       display: 'flex',
       justifyContent: 'center',
