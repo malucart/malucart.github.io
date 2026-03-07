@@ -1,16 +1,32 @@
-# React + Vite
+# malucart.github.io
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+My personal website — a space to myself.
 
-Currently, two official plugins are available:
+I'm building up my skills in JavaScript, React, Vite, and ESLint, and this is where I document that journey. You'll find projects I've been working on and a blog where I share what I'm learning along the way.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Stack
 
-## React Compiler
+- React
+- Vite
+- ESLint
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Development
 
-## Expanding the ESLint configuration
+```bash
+npm install
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Deployment
+
+Built with Vite and deployed to GitHub Pages via the `gh-pages` branch.
+
+```bash
+npm run build
+git worktree add --orphan -b gh-pages /tmp/gh-pages-deploy
+cp -r dist/. /tmp/gh-pages-deploy/
+git -C /tmp/gh-pages-deploy add .
+git -C /tmp/gh-pages-deploy commit -m "Deploy to GitHub Pages"
+git -C /tmp/gh-pages-deploy push origin gh-pages
+git worktree remove /tmp/gh-pages-deploy
+```
