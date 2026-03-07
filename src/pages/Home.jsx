@@ -1,13 +1,13 @@
 const projects = [
   {
     name: 'Rocket Telemetry',
-    description: 'A slide presentation about my rocket telemetry , built with Reveal.js.',
+    description: 'A slide presentation about my rocket telemetry for when I was part of the rocket club during school, built with Reveal.js.',
     link: '/slides_rocket/index.html',
   },
   {
-    name: 'Project Two',
-    description: 'A short description of what this project does and what you learned building it.',
-    link: '#',
+    name: 'TimingAttack: A Burp Suite Extension',
+    description: 'It allows pentesters to verify whether a website is susceptible to timing attacks.',
+    link: 'https://github.com/malucart/TimingAttack',
   },
   {
     name: 'Project Three',

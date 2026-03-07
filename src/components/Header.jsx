@@ -1,3 +1,12 @@
+import { Link } from 'react-router-dom'
+
+const navItems = [
+  { label: 'home', to: '/' },
+  { label: 'about me', to: '/about' },
+  { label: 'projects', to: '/#projects' },
+  { label: 'blog', to: '/blog' },
+]
+
 export default function Header() {
   return (
     <header style={{
@@ -8,10 +17,10 @@ export default function Header() {
       backgroundColor: 'transparent',
     }}>
       <nav style={{ display: 'flex', gap: '2rem' }}>
-        {['home', 'about me', 'projects', 'blog'].map((item) => (
-          <a
-            key={item}
-            href={item === 'home' ? '/' : `#${item.toLowerCase().replace(' ', '-')}`}
+        {navItems.map(({ label, to }) => (
+          <Link
+            key={label}
+            to={to}
             style={{
               textDecoration: 'none',
               color: '#333',
@@ -22,8 +31,8 @@ export default function Header() {
             onMouseEnter={e => e.target.style.color = '#E07A96'}
             onMouseLeave={e => e.target.style.color = '#333'}
           >
-            {item}
-          </a>
+            {label}
+          </Link>
         ))}
       </nav>
     </header>

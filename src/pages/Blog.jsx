@@ -1,0 +1,76 @@
+const posts = [
+  {
+    category: 'DSA Concepts',
+    items: [
+      { title: 'Arrays & Sliding Window', description: 'Notes on array traversal techniques and the sliding window pattern.', link: '#' },
+      { title: 'Linked Lists', description: 'How linked lists work, common operations, and when to use them.', link: '#' },
+      { title: 'Binary Search', description: 'Breaking down binary search and its variations.', link: '#' },
+      { title: 'Recursion & Backtracking', description: 'Understanding the call stack and how backtracking explores solutions.', link: '#' },
+    ],
+  },
+  {
+    category: 'Projects',
+    items: [
+      { title: 'smlt', description: 'A collection of security and CTF writeups.', link: '/smlt/home.html' },
+    ],
+  },
+]
+
+export default function Blog() {
+  return (
+    <div style={{
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      fontFamily: 'system-ui, sans-serif',
+      padding: '3rem 2rem',
+    }}>
+      <div style={{ width: '100%', maxWidth: '680px' }}>
+        <h1 style={{ fontSize: '1.8rem', color: '#222', marginBottom: '0.3rem' }}>Blog</h1>
+        <p style={{ color: '#888', fontSize: '0.95rem', marginBottom: '3rem' }}>
+          Notes, writeups, and things I&apos;m learning.
+        </p>
+
+        {posts.map((section) => (
+          <div key={section.category} style={{ marginBottom: '3rem' }}>
+            <h2 style={{
+              fontSize: '1rem',
+              fontWeight: '600',
+              color: '#c0607a',
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+              marginBottom: '1rem',
+              borderBottom: '1px solid #f0d0d8',
+              paddingBottom: '0.5rem',
+            }}>
+              {section.category}
+            </h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {section.items.map((post) => (
+                <a
+                  key={post.title}
+                  href={post.link}
+                  style={{
+                    textDecoration: 'none',
+                    padding: '1rem 1.2rem',
+                    borderRadius: '10px',
+                    backgroundColor: 'rgba(255,255,255,0.7)',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                    display: 'block',
+                    transition: 'box-shadow 0.2s',
+                  }}
+                  onMouseEnter={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.1)'}
+                  onMouseLeave={e => e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.06)'}
+                >
+                  <div style={{ fontWeight: '500', color: '#222', marginBottom: '0.25rem' }}>{post.title}</div>
+                  <div style={{ fontSize: '0.875rem', color: '#777' }}>{post.description}</div>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
