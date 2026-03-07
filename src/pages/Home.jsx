@@ -30,16 +30,17 @@ export default function Home() {
           color: '#aaa',
           fontSize: '0.85rem',
         }}>
-          photo
+          <img 
+            src="/images/profile_pic.jpg" 
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
         </div>
-
         <div>
           <h1 style={{ margin: '0 0 0.5rem', fontSize: '2rem', color: '#222' }}>
-            Your Name
+            Louisa
           </h1>
           <p style={{ margin: 0, fontSize: '1rem', color: '#555', lineHeight: '1.6' }}>
-            Learning JavaScript, React, Vite and ESLint — one project at a time.
-            This is my space to build, experiment, and share what I discover along the way.
+            This is my space to build, experiment, and share what I discover along the way. 
           </p>
         </div>
       </div>
