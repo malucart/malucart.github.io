@@ -2,7 +2,7 @@ const experience = [
   {
     role: 'Software Engineer',
     company: 'Microsoft',
-    period: 'Jan 2023 – Jan 2025',
+    period: '2023 – 2025',
     description: [
       'Fullstack working with Typescript, React, C# and C++ in Power Automate product features:',
       '- Redesigned the Approvals UI for premium users by collaborating with PMs and designers to improve workflow efficiency and user satisfaction for approximately 4 million monthly premium users across over 130,000 companies. On the backend, handle approval request routing, state transitions, notification triggers, and database interactions that process user permissions and approval history.',
@@ -13,7 +13,7 @@ const experience = [
   {
     role: 'Code Instructor',
     company: 'X-Camp',
-    period: 'Nov 2025 – Present',
+    period: '2025 – Present',
     description: [
       '- Python instructor teaching kids through interactive lessons, project based learning, and problem solving activities that develop logical thinking and real coding skills.'
     ]
@@ -50,6 +50,7 @@ const experience = [
 export default function About({ dark }) {
   const t = dark ? darkTheme : lightTheme
   return (
+    <>
     <div className="about-page">
       <div style={{ width: '100%', maxWidth: '680px', display: 'flex', flexDirection: 'column', gap: '3rem' }}>
 
@@ -77,6 +78,23 @@ export default function About({ dark }) {
           </div>
         </div>
 
+        {/* Awards */}
+        <div>
+          <h2 style={{ ...sectionHeading, color: t.accent, borderBottomColor: t.border }}>Awards</h2>
+          <div style={{ ...card, backgroundColor: t.cardBg }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.3rem', marginBottom: '0.5rem' }}>
+              <div style={{ fontWeight: '600', color: t.textPrimary, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                1st <img src="/images/star.png" alt="star" style={{ width: '1rem', height: '1rem', objectFit: 'contain' }} /> Place at COBRUF Aerospace Competition 2018
+              </div>
+              <div style={{ fontSize: '0.825rem', color: t.accent }}>Engineers' Award</div>
+              <div style={{ fontSize: '0.825rem', color: t.accent }}>Potiguar Rocket Design Team</div>
+            </div>
+            <p style={{ margin: 0, fontSize: '0.875rem', color: t.textSecondary, lineHeight: '1.6' }}>
+              Honorable mention in professional operation, launching base, propulsion of excellence, team spirit and academic solidarity.
+            </p>
+          </div>
+        </div>
+
         {/* Education */}
         <div>
           <h2 style={{ ...sectionHeading, color: t.accent, borderBottomColor: t.border }}>Education</h2>
@@ -100,6 +118,20 @@ export default function About({ dark }) {
 
       </div>
     </div>
+
+    <footer style={{
+      width: '100%',
+      padding: '0.8rem',
+      textAlign: 'center',
+      borderTop: `1px solid ${t.border}`,
+      marginTop: 'auto',
+      background: dark ? '#0d1117' : 'linear-gradient(135deg, #ffffff 0%, #F4A7B9 100%)',
+    }}>
+      <p style={{ margin: 0, fontSize: '0.75rem', color: dark ? '#a0d4a0' : '#888' }}>
+        louisa's
+      </p>
+    </footer>
+    </>
   )
 }
 

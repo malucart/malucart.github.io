@@ -136,9 +136,8 @@ button:focus-visible {
 }
 
 .welcome-text {
-  font-family: 'Great Vibes', cursive;
-  font-size: 2rem;
-  color: #c0607a;
+  font-family: 'Bitcount Prop Double', cursive;
+  font-size: 1rem;
   animation: welcomeFade 3.8s ease-in infinite;
   display: inline;
   white-space: nowrap;

@@ -58,7 +58,7 @@ export default function Home({ dark }) {
         </h1>
 
         <p style={{ margin: 0, fontSize: '1.05rem', color: t.textSecondary, lineHeight: '1.7' }}>
-          Full stack engineer with a physics background that loves things that fly and go fast. I moved from rockets to pixels, and honestly? I love both. <br /> Clean UI with fast interactions is true <span className="sparkle-word">happiness<span className="sparkle-dot s1">✦</span><span className="sparkle-dot s2">✦</span><span className="sparkle-dot s3">✦</span></span>, and yes, my Spotify is still 90% aerospace podcasts.
+          Full stack engineer with a physics background that loves things that fly and go fast. I moved from rockets to pixels, and honestly? I love both. <br /> Clean UI with fast interactions is true <span className="sparkle-word">happiness<span className="sparkle-dot s1">✦</span><span className="sparkle-dot s2">✦</span><span className="sparkle-dot s3">✦</span></span>.
         </p>
 
         {/* Social links */}
@@ -102,7 +102,7 @@ export default function Home({ dark }) {
                 </span>
               </span>
             </span>
-            <span className="welcome-text" style={{ color: t.accent }}>Welcome aboard</span>
+            <span className="welcome-text" style={{ color: dark ? '#8b949e' : t.accent }}>Welcome aboard</span>
           </h2>
         </section>
       </div>
@@ -114,9 +114,9 @@ export default function Home({ dark }) {
         textAlign: 'center',
         borderTop: `1px solid ${t.border}`,
         marginTop: 'auto',
-        background: dark ? t.sectionBg : 'linear-gradient(135deg, #ffffff 0%, #F4A7B9 100%)',
+        background: dark ? '#0d1117' : 'linear-gradient(135deg, #ffffff 0%, #F4A7B9 100%)',
       }}>
-        <p style={{ margin: 0, fontSize: '0.75rem', color: t.textSecondary }}>
+        <p style={{ margin: 0, fontSize: '0.75rem', color: dark ? '#a0d4a0' : t.textSecondary }}>
           louisa's
         </p>
       </footer>
