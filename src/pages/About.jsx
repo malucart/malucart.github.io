@@ -50,14 +50,7 @@ const experience = [
 export default function About({ dark }) {
   const t = dark ? darkTheme : lightTheme
   return (
-    <div style={{
-      flex: 1,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      fontFamily: 'system-ui, sans-serif',
-      padding: '3rem 2rem',
-    }}>
+    <div className="about-page">
       <div style={{ width: '100%', maxWidth: '680px', display: 'flex', flexDirection: 'column', gap: '3rem' }}>
 
         {/* Experience */}

@@ -12,7 +12,7 @@ const projects = [
   {
     name: 'My Favorite Crypto',
     description: 'App that tracks cryptocurrency in real time.',
-    link: '#',
+    link: 'https://github.com/malucart/MyFavoriteCrypto',
   },
 ]
 
@@ -35,19 +35,10 @@ export default function Home({ dark }) {
     }}>
 
       {/* Profile */}
-      <section style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        textAlign: 'center',
-        padding: '3rem 2rem 4rem',
-        gap: '1.2rem',
-        maxWidth: '600px',
-        width: '100%',
-      }}>
+      <section className="profile-section">
         <div style={{
-          width: '140px',
-          height: '140px',
+          width: '150px',
+          height: '150px',
           borderRadius: '50%',
           overflow: 'hidden',
           border: '4px solid #fff',
@@ -66,8 +57,8 @@ export default function Home({ dark }) {
           Louisa
         </h1>
 
-        <p style={{ margin: 0, fontSize: '1.05rem', color: t.textSecondary, lineHeight: '1.7', whiteSpace: 'nowrap' }}>
-          This is my space to build, experiment, and share some stuff.
+        <p style={{ margin: 0, fontSize: '1.05rem', color: t.textSecondary, lineHeight: '1.7' }}>
+          Full stack engineer with a physics background that loves things that fly and go fast. I moved from rockets to pixels, and honestly? I love both. <br /> Clean UI with fast interactions is true <span className="sparkle-word">happiness<span className="sparkle-dot s1">✦</span><span className="sparkle-dot s2">✦</span><span className="sparkle-dot s3">✦</span></span>, and yes, my Spotify is still 90% aerospace podcasts.
         </p>
 
         {/* Social links */}
@@ -98,51 +89,35 @@ export default function Home({ dark }) {
       </div>
 
       <div style={{ backgroundColor: t.sectionBg, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {/* Featured Projects */}
-        <section id="projects" style={sectionStyle}>
-          <h2 style={{ ...sectionHeading, color: t.accent, borderBottomColor: t.border }}>Featured Projects</h2>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-            gap: '1.2rem',
-            width: '100%',
-          }}>
-            {projects.map((p) => (
-              <div key={p.name} style={{ ...cardStyle, backgroundColor: t.cardBg }}>
-                <h3 style={{ margin: '0 0 0.5rem', fontSize: '1rem', color: t.textPrimary }}>{p.name}</h3>
-                <p style={{ margin: '0 0 1rem', fontSize: '0.9rem', color: t.textSecondary, lineHeight: '1.6', flex: 1 }}>{p.description}</p>
-                <a href={p.link} style={{ ...linkStyle, color: t.accent }}>View Project →</a>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Currently Exploring */}
-        <section id="about-me" style={sectionStyle}>
-          <h2 style={{ ...sectionHeading, color: t.accent, borderBottomColor: t.border }}>Currently Exploring</h2>
-          <ul style={{ margin: 0, padding: '0 0 0 1.2rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            {exploring.map((item) => (
-              <li key={item} style={{ fontSize: '0.95rem', color: t.textSecondary, lineHeight: '1.6' }}>{item}</li>
-            ))}
-          </ul>
+        {/* Rocket */}
+        <section id="projects" className="content-section" style={{ width: '100%' }}>
+          <h2 style={{ ...sectionHeading, color: t.accent, borderBottomColor: t.border, display: 'flex', alignItems: 'center', gap: '2rem', justifyContent: 'center' }}>
+            <span className="rocket-wrapper">
+              <span className="rocket-launch">
+                <img src="/images/rocket.png" alt="rocket" style={{ width: '4.5rem', height: '4.5rem', objectFit: 'contain', transform: 'rotate(20deg)' }} />
+                <span className="rocket-smoke">
+                  <span className="smoke-dot" />
+                  <span className="smoke-dot" />
+                  <span className="smoke-dot" />
+                </span>
+              </span>
+            </span>
+            <span className="welcome-text" style={{ color: t.accent }}>Welcome aboard</span>
+          </h2>
         </section>
       </div>
 
       {/* Footer */}
-      <footer id="blog" style={{
+      <footer style={{
         width: '100%',
-        padding: '1rem',
+        padding: '0.8rem',
         textAlign: 'center',
         borderTop: `1px solid ${t.border}`,
         marginTop: 'auto',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '0.8rem',
         background: dark ? t.sectionBg : 'linear-gradient(135deg, #ffffff 0%, #F4A7B9 100%)',
       }}>
-        <p style={{ margin: 0, fontSize: '0.8rem', color: t.textSecondary }}>
-          louisa's ⚡
+        <p style={{ margin: 0, fontSize: '0.75rem', color: t.textSecondary }}>
+          louisa's
         </p>
       </footer>
     </div>
@@ -175,11 +150,6 @@ const iconStyle = {
   alignItems: 'center',
 }
 
-const sectionStyle = {
-  width: '100%',
-  maxWidth: '760px',
-  padding: '3rem 2rem',
-}
 
 const sectionHeading = {
   margin: '0 0 1.5rem',
