@@ -7,7 +7,7 @@ const experience = [
       'Fullstack working with Typescript, React, C# and C++ in Power Automate product features:',
       '- Redesigned the Approvals UI for premium users by collaborating with PMs and designers to improve workflow efficiency and user satisfaction for approximately 4 million monthly premium users across over 130,000 companies. On the backend, handle approval request routing, state transitions, notification triggers, and database interactions that process user permissions and approval history.',
       '- Developed UI for Power Automate in Excel Online and Desktop, implementing telemetry tracking with the Excel team and PMs. This led to an 11% usage increase in the first month, enhancing user experience and workflow efficiency.',
-      '- Migrated authentication system from Azure Active Directory to Microsoft Graph for the Approvals feature, streamlining authentication processes and enhancing integration with Microsoft 365 services. This improvement impacted millions of users as part of Power Automate’s 10M+ monthly active users across 350,000+ organizations. '
+      "- Migrated authentication system from Azure Active Directory to Microsoft Graph for the Approvals feature, streamlining authentication processes and enhancing integration with Microsoft 365 services. This improvement impacted millions of users as part of Power Automate’s 10M+ monthly active users across 350,000+ organizations."
     ]
   },
   {
@@ -47,7 +47,8 @@ const experience = [
   },
 ]
 
-export default function About() {
+export default function About({ dark }) {
+  const t = dark ? darkTheme : lightTheme
   return (
     <div style={{
       flex: 1,
@@ -61,22 +62,22 @@ export default function About() {
 
         {/* Experience */}
         <div>
-          <h2 style={sectionHeading}>Experience</h2>
+          <h2 style={{ ...sectionHeading, color: t.accent, borderBottomColor: t.border }}>Experience</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {experience.map((job) => (
-              <div key={job.role + job.company} style={card}>
+              <div key={job.role + job.company} style={{ ...card, backgroundColor: t.cardBg }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.3rem', marginBottom: '0.5rem' }}>
                   <div>
-                    <div style={{ fontWeight: '600', color: '#222', fontSize: '0.95rem' }}>{job.role}</div>
-                    <div style={{ color: '#c0607a', fontSize: '0.875rem' }}>{job.company}</div>
+                    <div style={{ fontWeight: '600', color: t.textPrimary, fontSize: '0.95rem' }}>{job.role}</div>
+                    <div style={{ color: t.accent, fontSize: '0.875rem' }}>{job.company}</div>
                   </div>
-                  <div style={{ fontSize: '0.825rem', color: '#888' }}>{job.period}</div>
+                  <div style={{ fontSize: '0.825rem', color: t.textSecondary }}>{job.period}</div>
                 </div>
                 {Array.isArray(job.description)
                   ? job.description.map((line, i) => (
-                      <p key={i} style={{ margin: '0 0 0.25rem', fontSize: '0.875rem', color: '#666', lineHeight: '1.6' }}>{line}</p>
+                      <p key={i} style={{ margin: '0 0 0.25rem', fontSize: '0.875rem', color: t.textSecondary, lineHeight: '1.6' }}>{line}</p>
                     ))
-                  : <p style={{ margin: 0, fontSize: '0.875rem', color: '#666', lineHeight: '1.6' }}>{job.description}</p>
+                  : <p style={{ margin: 0, fontSize: '0.875rem', color: t.textSecondary, lineHeight: '1.6' }}>{job.description}</p>
                 }
               </div>
             ))}
@@ -85,19 +86,19 @@ export default function About() {
 
         {/* Education */}
         <div>
-          <h2 style={sectionHeading}>Education</h2>
+          <h2 style={{ ...sectionHeading, color: t.accent, borderBottomColor: t.border }}>Education</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {[
               { degree: 'BS Software Development', school: 'Bellevue College', period: '2020 – 2023' },
               { degree: 'BS Applied Physics (undergrad equivalent)', school: 'Universidade Federal do Rio Grande do Norte', period: '2013 – 2017' },
             ].map((edu) => (
-              <div key={edu.degree} style={card}>
+              <div key={edu.degree} style={{ ...card, backgroundColor: t.cardBg }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.3rem' }}>
                   <div>
-                    <div style={{ fontWeight: '600', color: '#222', fontSize: '0.95rem' }}>{edu.degree}</div>
-                    <div style={{ color: '#c0607a', fontSize: '0.875rem' }}>{edu.school}</div>
+                    <div style={{ fontWeight: '600', color: t.textPrimary, fontSize: '0.95rem' }}>{edu.degree}</div>
+                    <div style={{ color: t.accent, fontSize: '0.875rem' }}>{edu.school}</div>
                   </div>
-                  <div style={{ fontSize: '0.825rem', color: '#888' }}>{edu.period}</div>
+                  <div style={{ fontSize: '0.825rem', color: t.textSecondary }}>{edu.period}</div>
                 </div>
               </div>
             ))}
@@ -107,6 +108,22 @@ export default function About() {
       </div>
     </div>
   )
+}
+
+const lightTheme = {
+  textPrimary: '#222',
+  textSecondary: '#666',
+  cardBg: 'rgba(255,255,255,0.30)',
+  accent: '#c0607a',
+  border: '#f0d0d8',
+}
+
+const darkTheme = {
+  textPrimary: '#e6edf3',
+  textSecondary: '#8b949e',
+  cardBg: '#1c2128',
+  accent: '#3fb950',
+  border: '#30363d',
 }
 
 const sectionHeading = {

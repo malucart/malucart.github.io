@@ -10,8 +10,8 @@ const projects = [
     link: 'https://github.com/malucart/TimingAttack',
   },
   {
-    name: 'Project Three',
-    description: 'A short description of what this project does and what you learned building it.',
+    name: 'My Favorite Crypto',
+    description: 'App that tracks cryptocurrency in real time.',
     link: '#',
   },
 ]
@@ -23,7 +23,8 @@ const exploring = [
   'Deploying with GitHub Actions',
 ]
 
-export default function Home() {
+export default function Home({ dark }) {
+  const t = dark ? darkTheme : lightTheme
   return (
     <div style={{
       flex: 1,
@@ -33,7 +34,7 @@ export default function Home() {
       fontFamily: 'system-ui, sans-serif',
     }}>
 
-      {/* Hero / Profile */}
+      {/* Profile */}
       <section style={{
         display: 'flex',
         flexDirection: 'column',
@@ -55,18 +56,17 @@ export default function Home() {
           flexShrink: 0,
         }}>
           <img
-            src="/images/profile_picture.png"
+            src="/images/pic_main.png"
             alt="Louisa"
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         </div>
 
-        <h1 style={{ margin: 0, fontSize: '1.4rem', color: '#222', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-          louisa
-          <img src="/images/sunflower.png" alt="sunflower" style={{ width: '2.1rem', height: '2rem' }} />
+        <h1 style={{ margin: 0, fontSize: '2.2rem', color: t.textPrimary, display: 'flex', alignItems: 'center', gap: '0.4rem', fontFamily: "'Great Vibes', cursive", fontWeight: 400 }}>
+          Louisa
         </h1>
 
-        <p style={{ margin: 0, fontSize: '1.05rem', color: '#555', lineHeight: '1.7', whiteSpace: 'nowrap' }}>
+        <p style={{ margin: 0, fontSize: '1.05rem', color: t.textSecondary, lineHeight: '1.7', whiteSpace: 'nowrap' }}>
           This is my space to build, experiment, and share some stuff.
         </p>
 
@@ -93,14 +93,14 @@ export default function Home() {
       {/* Wave divider */}
       <div style={{ width: '100%', lineHeight: 0 }}>
         <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', width: '100%' }}>
-          <path d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z" fill="white" />
+          <path d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z" fill={t.sectionBg} />
         </svg>
       </div>
 
-      <div style={{ backgroundColor: 'white', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div style={{ backgroundColor: t.sectionBg, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {/* Featured Projects */}
         <section id="projects" style={sectionStyle}>
-          <h2 style={sectionHeading}>Featured Projects</h2>
+          <h2 style={{ ...sectionHeading, color: t.accent, borderBottomColor: t.border }}>Featured Projects</h2>
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
@@ -108,10 +108,10 @@ export default function Home() {
             width: '100%',
           }}>
             {projects.map((p) => (
-              <div key={p.name} style={cardStyle}>
-                <h3 style={{ margin: '0 0 0.5rem', fontSize: '1rem', color: '#222' }}>{p.name}</h3>
-                <p style={{ margin: '0 0 1rem', fontSize: '0.9rem', color: '#555', lineHeight: '1.6', flex: 1 }}>{p.description}</p>
-                <a href={p.link} style={linkStyle}>View Project →</a>
+              <div key={p.name} style={{ ...cardStyle, backgroundColor: t.cardBg }}>
+                <h3 style={{ margin: '0 0 0.5rem', fontSize: '1rem', color: t.textPrimary }}>{p.name}</h3>
+                <p style={{ margin: '0 0 1rem', fontSize: '0.9rem', color: t.textSecondary, lineHeight: '1.6', flex: 1 }}>{p.description}</p>
+                <a href={p.link} style={{ ...linkStyle, color: t.accent }}>View Project →</a>
               </div>
             ))}
           </div>
@@ -119,10 +119,10 @@ export default function Home() {
 
         {/* Currently Exploring */}
         <section id="about-me" style={sectionStyle}>
-          <h2 style={sectionHeading}>Currently Exploring</h2>
+          <h2 style={{ ...sectionHeading, color: t.accent, borderBottomColor: t.border }}>Currently Exploring</h2>
           <ul style={{ margin: 0, padding: '0 0 0 1.2rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             {exploring.map((item) => (
-              <li key={item} style={{ fontSize: '0.95rem', color: '#444', lineHeight: '1.6' }}>{item}</li>
+              <li key={item} style={{ fontSize: '0.95rem', color: t.textSecondary, lineHeight: '1.6' }}>{item}</li>
             ))}
           </ul>
         </section>
@@ -131,21 +131,40 @@ export default function Home() {
       {/* Footer */}
       <footer id="blog" style={{
         width: '100%',
-        padding: '2rem',
+        padding: '1rem',
         textAlign: 'center',
-        borderTop: '1px solid rgba(0,0,0,0.08)',
+        borderTop: `1px solid ${t.border}`,
         marginTop: 'auto',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         gap: '0.8rem',
+        background: dark ? t.sectionBg : 'linear-gradient(135deg, #ffffff 0%, #F4A7B9 100%)',
       }}>
-        <p style={{ margin: 0, fontSize: '0.8rem', color: '#777' }}>
-          built with React + Vite ⚡
+        <p style={{ margin: 0, fontSize: '0.8rem', color: t.textSecondary }}>
+          louisa's ⚡
         </p>
       </footer>
     </div>
   )
+}
+
+const lightTheme = {
+  textPrimary: '#222',
+  textSecondary: '#555',
+  sectionBg: '#ffffff',
+  cardBg: 'rgba(255,255,255,0.6)',
+  accent: '#c0607a',
+  border: 'rgba(0,0,0,0.08)',
+}
+
+const darkTheme = {
+  textPrimary: '#e6edf3',
+  textSecondary: '#8b949e',
+  sectionBg: '#161b22',
+  cardBg: '#1c2128',
+  accent: '#3fb950',
+  border: '#30363d',
 }
 
 const iconStyle = {
