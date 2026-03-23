@@ -15,37 +15,37 @@ const projects = [
     name: 'My Favorite Crypto',
     description: 'App that tracks cryptocurrency in real time, using CoinMarketCap API.',
     link: 'https://github.com/malucart/MyFavoriteCrypto',
-    cover: 'images/wireframes_crypto.png',
+    cover: '/images/wireframes_crypto.png',
   },
   {
     name: 'pwnable-dot-kr',
     description: 'Solved a few pwn challenges regarding system exploitation.',
     link: 'https://github.com/malucart/pwanble-dot-kr',
-    cover: 'images/pwn.png',
+    cover: '/images/pwn.png',
   },
   {
     name: 'Black Hole',
     description: 'A physics-based simulation of a black hole built in Python and Pygame library',
     link: 'https://github.com/malucart/BlackHole',
-    cover: 'images/blackhole.png',
+    cover: '/images/blackhole.png',
   },
   {
     name: 'Flixster',
     description: 'App that shows the latest movies currently playing in theaters. It uses the Movie Database API to display images and basic information about these movies to the user.',
     link: 'https://github.com/malucart/Flixster',
-    cover: 'images/flixter3.png',
+    cover: '/images/flixter3.png',
   },
   {
     name: 'Twitter App',
     description: 'App that allows a user to view their Twitter timeline and post a new tweet. The app utilizes Twitter REST API.',
     link: 'https://github.com/malucart/SimpleTwitterApp',
-    cover: 'images/twitter.png',
+    cover: '/images/twitter.png',
   },
   {
     name: 'Weather App',
     description: 'Simple app that shows temperature, sensation ("feels like"), and humidity of a city that was chosen by the user.',
     link: 'https://github.com/malucart/MyWeatherApp/tree/main',
-    cover: 'images/weatherapp.png',
+    cover: '/images/weatherapp.png',
   },
 ]
 
