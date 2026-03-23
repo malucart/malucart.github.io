@@ -88,7 +88,7 @@ export default function Home({ dark }) {
         </svg>
       </div>
 
-      <div style={{ backgroundColor: t.sectionBg, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div style={{ backgroundColor: t.sectionBg, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
         {/* Rocket */}
         <section id="projects" className="content-section" style={{ width: '100%' }}>
           <h2 style={{ ...sectionHeading, color: t.accent, borderBottomColor: t.border, display: 'flex', alignItems: 'center', gap: '2rem', justifyContent: 'center' }}>
@@ -113,7 +113,7 @@ export default function Home({ dark }) {
         padding: '0.8rem',
         textAlign: 'center',
         borderTop: `1px solid ${t.border}`,
-        marginTop: 'auto',
+        marginTop: 0,
         background: dark ? '#0d1117' : 'linear-gradient(135deg, #ffffff 0%, #F4A7B9 100%)',
       }}>
         <p style={{ margin: 0, fontSize: '0.75rem', color: dark ? '#a0d4a0' : t.textSecondary }}>

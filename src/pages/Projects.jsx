@@ -54,25 +54,14 @@ export default function Projects({ dark }) {
 
   return (
     <>
-      <div style={{
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        fontFamily: 'system-ui, sans-serif',
-        padding: '3rem 2rem 0',
-      }}>
+      <div className="projects-page">
         <div style={{ width: '100%', maxWidth: '900px', flex: 1 }}>
           <h1 style={{ fontSize: '1.8rem', color: t.textPrimary, marginBottom: '0.3rem' }}>Projects</h1>
           <p style={{ color: t.textSecondary, fontSize: '0.95rem', marginBottom: '2.5rem' }}>
             Things I've built and worked on.
           </p>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
-            gap: '1.5rem',
-          }}>
+          <div className="projects-grid">
             {projects.map((p) => (
               <a
                 key={p.name}

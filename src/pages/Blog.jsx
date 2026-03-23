@@ -18,14 +18,8 @@ const posts = [
 
 export default function Blog({ dark }) {
   return (
-    <div style={{
-      flex: 1,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      fontFamily: 'system-ui, sans-serif',
-      padding: '3rem 2rem 0',
-    }}>
+    <>
+    <div className="blog-page">
       <div style={{ width: '100%', maxWidth: '680px', flex: 1 }}>
         <h1 style={{ fontSize: '1.8rem', color: '#222', marginBottom: '0.3rem' }}>Blog</h1>
         <p style={{ color: '#888', fontSize: '0.95rem', marginBottom: '3rem' }}>
@@ -71,19 +65,20 @@ export default function Blog({ dark }) {
           </div>
         ))}
       </div>
-
-      <footer style={{
-        width: '100%',
-        padding: '0.8rem',
-        textAlign: 'center',
-        borderTop: dark ? '1px solid #30363d' : '1px solid rgba(0,0,0,0.08)',
-        marginTop: 'auto',
-        background: dark ? '#0d1117' : 'linear-gradient(135deg, #ffffff 0%, #F4A7B9 100%)',
-      }}>
-        <p style={{ margin: 0, fontSize: '0.75rem', color: dark ? '#a0d4a0' : '#888' }}>
-          louisa's
-        </p>
-      </footer>
     </div>
+
+    <footer style={{
+      width: '100%',
+      padding: '0.8rem',
+      textAlign: 'center',
+      borderTop: dark ? '1px solid #30363d' : '1px solid rgba(0,0,0,0.08)',
+      marginTop: 'auto',
+      background: dark ? '#0d1117' : 'linear-gradient(135deg, #ffffff 0%, #F4A7B9 100%)',
+    }}>
+      <p style={{ margin: 0, fontSize: '0.75rem', color: dark ? '#a0d4a0' : '#888' }}>
+        louisa's ⚡
+      </p>
+    </footer>
+    </>
   )
 }
