@@ -235,9 +235,16 @@ button:focus-visible {
   font-size: 0.95rem;
 }
 
+.card-subtitle {
+  font-size: 0.875rem;
+}
+
 @media (max-width: 480px) {
   .card-title {
     font-size: 0.8rem;
+  }
+  .card-subtitle {
+    font-size: 0.76rem;
   }
 }
 

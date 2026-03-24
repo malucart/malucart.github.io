@@ -86,8 +86,8 @@ export default function About({ dark }) {
               <div className="card-title" style={{ fontWeight: '600', color: t.textPrimary, display: 'flex', alignItems: 'center', gap: '0.3rem', flexWrap: 'wrap' }}>
                 1st <img src="/images/star.png" alt="star" style={{ width: '1rem', height: '1rem', objectFit: 'contain' }} /> Place at COBRUF Aerospace Competition 2018
               </div>
-              <div style={{ fontSize: '0.825rem', color: t.accent }}>Engineers' Award</div>
               <div style={{ fontSize: '0.825rem', color: t.accent }}>Potiguar Rocket Design Team</div>
+              <div style={{ fontSize: '0.825rem', color: t.accent }}>Engineers' Award</div>
             </div>
             <p style={{ margin: 0, fontSize: '0.875rem', color: t.textSecondary, lineHeight: '1.6' }}>
               Honorable mention in professional operation, launching base, propulsion of excellence, team spirit and academic solidarity.
@@ -107,7 +107,7 @@ export default function About({ dark }) {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.3rem' }}>
                   <div>
                     <div className="card-title" style={{ fontWeight: '600', color: t.textPrimary }}>{edu.degree}</div>
-                    <div style={{ color: t.accent, fontSize: '0.875rem' }}>{edu.school}</div>
+                    <div className="card-subtitle" style={{ color: t.accent }}>{edu.school}</div>
                   </div>
                   <div style={{ fontSize: '0.825rem', color: t.textSecondary, whiteSpace: 'nowrap', flexShrink: 0 }}>{edu.period}</div>
                 </div>
