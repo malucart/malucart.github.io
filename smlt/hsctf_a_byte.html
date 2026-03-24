@@ -26,6 +26,7 @@
       justify-content: center;
       align-items: center;
       padding: 1rem 2rem;
+      position: relative;
     }
 
     nav {
@@ -44,6 +45,99 @@
     }
 
     nav a:hover { color: #E07A96; }
+
+    .header-actions {
+      position: absolute;
+      right: 2rem;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .show-ads-btn {
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 0.2rem 0.6rem;
+      color: #888;
+      transition: all 0.2s;
+      white-space: nowrap;
+      font-family: system-ui, sans-serif;
+    }
+
+    .show-ads-btn:hover { border-color: #E07A96; color: #E07A96; }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      opacity: 0.4;
+      transition: opacity 0.2s;
+    }
+
+    .icon-btn:hover, .icon-btn.active { opacity: 1; }
+
+    /* Rainbow stripe */
+    #rainbow-stripe {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 8px;
+      background: linear-gradient(to right, #ffb3b3, #ffd9b3, #fffdb3, #b3f0b3, #b3d9ff, #d9b3ff);
+      z-index: 1000;
+    }
+
+    #rainbow-stripe.on { display: block; }
+
+    /* Ad popup */
+    #ad-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    #ad-overlay.on { display: flex; }
+
+    #ad-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      max-width: 360px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      position: relative;
+    }
+
+    #ad-box p {
+      margin: 0;
+      font-size: 1rem;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    #ad-close {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: #aaa;
+      line-height: 1;
+      padding: 0.2rem;
+    }
 
     /* Main */
     main {
@@ -124,7 +218,6 @@
       line-height: 1.8;
     }
 
-    /* Inline assembly/code highlight */
     .asm {
       background: rgba(124, 58, 237, 0.08);
       color: #7c3aed;
@@ -134,7 +227,6 @@
       border-radius: 4px;
     }
 
-    /* Image blocks */
     .img-block {
       text-align: center;
       margin: 1.5rem 0;
@@ -152,11 +244,10 @@
       box-shadow: 0 8px 28px rgba(0,0,0,0.16);
     }
 
-    /* Callout card */
     .callout {
       background: rgba(255,255,255,0.55);
       border-radius: 10px;
-      padding: 1rem 1.2rem;
+      padding: 1rem 1rem 0.1rem 1rem;
       margin: 1.2rem 0;
     }
 
@@ -175,9 +266,36 @@
       color: #888;
     }
 
+    /* Dark theme */
+    body.dark {
+      background: #0d1117;
+      color: #e6edf3;
+    }
+
+    body.dark nav a { color: #a0d4a0; }
+    body.dark nav a:hover { color: #3fb950; }
+    body.dark h1 { color: #e6edf3; }
+    body.dark h2 { color: #3fb950; border-bottom-color: #30363d; }
+    body.dark p { color: #8b949e; }
+    body.dark ul li { color: #8b949e; }
+    body.dark .breadcrumb { color: #8b949e; }
+    body.dark .breadcrumb a { color: #3fb950; }
+    body.dark .post-category { color: #3fb950; }
+    body.dark .post-meta { color: #8b949e; }
+    body.dark .callout { background: #1c2128; }
+    body.dark footer { background: #0d1117; border-top-color: #30363d; }
+    body.dark footer p { color: #a0d4a0; }
+    body.dark .show-ads-btn { border-color: #30363d; color: #8b949e; }
+    body.dark .show-ads-btn:hover { border-color: #3fb950; color: #3fb950; }
+    body.dark #ad-box { background: #161b22; }
+    body.dark #ad-box p { color: #e6edf3; }
+    body.dark #ad-close { color: #8b949e; }
+
     @media (max-width: 600px) {
-      header { padding: 0.8rem 1rem; }
+      header { padding: 0.8rem 1rem; justify-content: space-between; }
       nav { gap: 1rem; font-size: 0.85rem; }
+      .header-actions { position: static; }
+      .show-ads-btn { display: none; }
       main { padding: 2rem 1rem; }
       h1 { font-size: 1.5rem; }
     }
@@ -185,14 +303,29 @@
 </head>
 <body>
 
+  <div id="rainbow-stripe"></div>
+
   <header>
     <nav>
-      <a href="/">Home</a>
-      <a href="/about">About</a>
-      <a href="/blog">Blog</a>
-      <a href="/projects">Projects</a>
+      <a href="/">home</a>
+      <a href="/about">about me</a>
+      <a href="/projects">projects</a>
+      <a href="/blog">blog</a>
     </nav>
+    <div class="header-actions">
+      <button class="show-ads-btn" id="ads-btn">show ads</button>
+      <button class="icon-btn" id="dark-btn" title="Toggle dark theme">🌑</button>
+      <button class="icon-btn" id="rainbow-btn" title="Toggle rainbow">🌈</button>
+    </div>
   </header>
+
+  <!-- Ad popup -->
+  <div id="ad-overlay">
+    <div id="ad-box">
+      <button id="ad-close">✕</button>
+      <p>Just kidding! I don't have ads.<br>Thanks for the support though!</p>
+    </div>
+  </div>
 
   <main>
     <div class="post-wrapper">
@@ -350,6 +483,38 @@
   <footer>
     <p>louisa's</p>
   </footer>
+
+  <script>
+    const body = document.body
+    const rainbow = document.getElementById('rainbow-stripe')
+    const darkBtn = document.getElementById('dark-btn')
+    const rainbowBtn = document.getElementById('rainbow-btn')
+    const adsBtn = document.getElementById('ads-btn')
+    const adOverlay = document.getElementById('ad-overlay')
+    const adClose = document.getElementById('ad-close')
+
+    let isDark = false
+    let isRainbow = false
+
+    darkBtn.addEventListener('click', () => {
+      isDark = !isDark
+      body.classList.toggle('dark', isDark)
+      darkBtn.textContent = isDark ? '☀️' : '🌑'
+      darkBtn.classList.toggle('active', isDark)
+    })
+
+    rainbowBtn.addEventListener('click', () => {
+      isRainbow = !isRainbow
+      rainbow.classList.toggle('on', isRainbow)
+      rainbowBtn.classList.toggle('active', isRainbow)
+    })
+
+    adsBtn.addEventListener('click', () => adOverlay.classList.add('on'))
+    adClose.addEventListener('click', () => adOverlay.classList.remove('on'))
+    adOverlay.addEventListener('click', (e) => {
+      if (e.target === adOverlay) adOverlay.classList.remove('on')
+    })
+  </script>
 
 </body>
 </html>
