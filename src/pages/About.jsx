@@ -65,7 +65,7 @@ export default function About({ dark }) {
                     <div style={{ fontWeight: '600', color: t.textPrimary, fontSize: '0.95rem' }}>{job.role}</div>
                     <div style={{ color: t.accent, fontSize: '0.875rem' }}>{job.company}</div>
                   </div>
-                  <div style={{ fontSize: '0.825rem', color: t.textSecondary }}>{job.period}</div>
+                  <div style={{ fontSize: '0.825rem', color: t.textSecondary, whiteSpace: 'nowrap', flexShrink: 0 }}>{job.period}</div>
                 </div>
                 {Array.isArray(job.description)
                   ? job.description.map((line, i) => (
@@ -109,7 +109,7 @@ export default function About({ dark }) {
                     <div style={{ fontWeight: '600', color: t.textPrimary, fontSize: '0.95rem' }}>{edu.degree}</div>
                     <div style={{ color: t.accent, fontSize: '0.875rem' }}>{edu.school}</div>
                   </div>
-                  <div style={{ fontSize: '0.825rem', color: t.textSecondary }}>{edu.period}</div>
+                  <div style={{ fontSize: '0.825rem', color: t.textSecondary, whiteSpace: 'nowrap', flexShrink: 0 }}>{edu.period}</div>
                 </div>
               </div>
             ))}
