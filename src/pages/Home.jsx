@@ -58,7 +58,7 @@ export default function Home({ dark }) {
         </h1>
 
         <p style={{ margin: 0, fontSize: '1.05rem', color: t.textSecondary, lineHeight: '1.7' }}>
-          Full stack engineer with a physics background that loves things that fly and go fast. I moved from rockets to pixels, and honestly? I love both. <br /> Clean UI with fast interactions is true <span className="sparkle-word">happiness<span className="sparkle-dot s1">✦</span><span className="sparkle-dot s2">✦</span><span className="sparkle-dot s3">✦</span></span>.
+          Full stack engineer with a physics background that loves things that fly and go fast. I moved from rockets to pixels, and honestly? I love both. <br /> I also design before I build: wireframes first, code second. <br /> Clean UI with fast interactions is true <span className="sparkle-word">happiness<span className="sparkle-dot s1">✦</span><span className="sparkle-dot s2">✦</span><span className="sparkle-dot s3">✦</span></span>.
         </p>
 
         {/* Social links */}
@@ -82,7 +82,7 @@ export default function Home({ dark }) {
       </section>
 
       {/* Wave divider */}
-      <div style={{ width: '100%', lineHeight: 0 }}>
+      <div style={{ width: '100%', lineHeight: 0, marginBottom: '-2px' }}>
         <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style={{ display: 'block', width: '100%' }}>
           <path d="M0,0 C360,80 1080,80 1440,0 L1440,80 L0,80 Z" fill={t.sectionBg} />
         </svg>
@@ -91,7 +91,7 @@ export default function Home({ dark }) {
       <div style={{ backgroundColor: t.sectionBg, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', flex: 1 }}>
         {/* Rocket */}
         <section id="projects" className="content-section" style={{ width: '100%' }}>
-          <h2 style={{ ...sectionHeading, color: t.accent, borderBottomColor: t.border, display: 'flex', alignItems: 'center', gap: '2rem', justifyContent: 'center' }}>
+          <h2 style={{ ...sectionHeading, color: t.accent, border: 'none', display: 'flex', alignItems: 'center', gap: '2rem', justifyContent: 'center' }}>
             <span className="rocket-wrapper">
               <span className="rocket-launch">
                 <img src="/images/rocket.png" alt="rocket" style={{ width: '4.5rem', height: '4.5rem', objectFit: 'contain', transform: 'rotate(20deg)' }} />
