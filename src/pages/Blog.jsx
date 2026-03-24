@@ -9,9 +9,9 @@ const posts = [
     ],
   },
   {
-    category: 'Projects',
+    category: 'CTF Writeup',
     items: [
-      { title: 'smlt', description: 'A collection of security and CTF writeups.', link: '/smlt/home.html' },
+      { title: 'smlt', description: 'One of my beginner friendly CTF writeups.', link: '/smlt/hsctf_a_byte.html' },
     ],
   },
 ]
