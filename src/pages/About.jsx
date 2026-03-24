@@ -86,10 +86,12 @@ export default function About({ dark }) {
               <div className="card-title" style={{ fontWeight: '600', color: t.textPrimary, display: 'flex', alignItems: 'center', gap: '0.3rem', flexWrap: 'wrap' }}>
                 1st <img src="/images/star.png" alt="star" style={{ width: '1rem', height: '1rem', objectFit: 'contain' }} /> Place at COBRUF Aerospace Competition 2018
               </div>
-              <div style={{ fontSize: '0.825rem', color: t.accent }}>Potiguar Rocket Design Team</div>
-              <div style={{ fontSize: '0.825rem', color: t.accent }}>Engineers' Award</div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.2rem' }}>
+                <div className="card-subtitle" style={{ color: t.accent }}>Potiguar Rocket Design Team</div>
+                <div className="card-subtitle" style={{ color: t.accent, whiteSpace: 'nowrap', flexShrink: 0 }}>Engineers' Award</div>
+              </div>
             </div>
-            <p style={{ margin: 0, fontSize: '0.875rem', color: t.textSecondary, lineHeight: '1.6' }}>
+            <p style={{ margin: 0, fontSize: '0.875rem', color: t.textSecondary, lineHeight: '1.6', fontStyle: 'italic' }}>
               Honorable mention in professional operation, launching base, propulsion of excellence, team spirit and academic solidarity.
             </p>
           </div>
