@@ -1,14 +1,14 @@
 const posts = [
-  {
-    category: 'DSA Concepts',
+  /*{
+   category: 'DSA Concepts',
     items: [
       { title: 'Arrays & Sliding Window', description: 'Notes on array traversal techniques and the sliding window pattern.', link: '#' },
       { title: 'Linked Lists', description: 'How linked lists work, common operations, and when to use them.', link: '#' },
       { title: 'Binary Search', description: 'Breaking down binary search and its variations.', link: '#' },
       { title: 'Recursion & Backtracking', description: 'Understanding the call stack and how backtracking explores solutions.', link: '#' },
-    ],
-  },
-  {
+    ], 
+  },*/
+  { 
     category: 'CTF Writeup',
     items: [
       { title: 'smlt', description: 'One of my beginner friendly CTF writeups.', link: '/smlt/hsctf_a_byte.html' },
@@ -23,7 +23,7 @@ export default function Blog({ dark }) {
       <div style={{ width: '100%', maxWidth: '680px', flex: 1 }}>
         <h1 style={{ fontSize: '1.8rem', color: '#222', marginBottom: '0.3rem' }}>Blog</h1>
         <p style={{ color: '#888', fontSize: '0.95rem', marginBottom: '3rem' }}>
-          Notes, writeups, and things I&apos;m learning.
+          Notes and writeups, for easy lookup.
         </p>
 
         {posts.map((section) => (
@@ -76,7 +76,7 @@ export default function Blog({ dark }) {
       background: dark ? '#0d1117' : 'linear-gradient(135deg, #ffffff 0%, #F4A7B9 100%)',
     }}>
       <p style={{ margin: 0, fontSize: '0.75rem', color: dark ? '#a0d4a0' : '#888' }}>
-        louisa's ⚡
+        louisa's
       </p>
     </footer>
     </>
