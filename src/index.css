@@ -49,7 +49,7 @@ button:focus-visible {
 .sparkle-word {
   position: relative;
   display: inline-block;
-  background: linear-gradient(90deg, #ff9500, #ffd700, #ffb347, #ff9500);
+  background: linear-gradient(90deg, #7c3aed, #c026d3, #7c3aed, #a855f7, #7c3aed);
   background-size: 250% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -65,11 +65,11 @@ button:focus-visible {
 
 .sparkle-dot {
   position: absolute;
-  color: #ffd700;
+  color: #a855f7;
   font-size: 0.55rem;
   line-height: 1;
   animation: twinkle 1.6s ease-in-out infinite;
-  -webkit-text-fill-color: #ffd700;
+  -webkit-text-fill-color: #a855f7;
   pointer-events: none;
 }
 .sparkle-dot.s1 { top: -7px; left: 0%;   animation-delay: 0s; }
