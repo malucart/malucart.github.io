@@ -229,6 +229,9 @@ button:focus-visible {
   .about-page {
     padding: 2rem 1rem;
   }
+  .bio-text {
+    font-size: 0.92rem !important;
+  }
 }
 
 .card-title {
