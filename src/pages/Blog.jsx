@@ -21,8 +21,8 @@ export default function Blog({ dark }) {
     <>
     <div className="blog-page">
       <div style={{ width: '100%', maxWidth: '680px', flex: 1 }}>
-        <h1 style={{ fontSize: '1.8rem', color: '#222', marginBottom: '0.3rem' }}>Blog</h1>
-        <p style={{ color: '#888', fontSize: '0.95rem', marginBottom: '3rem' }}>
+        <h1 style={{ fontSize: '1.8rem', color: dark ? '#e6edf3' : '#222', marginBottom: '0.3rem' }}>Blog</h1>
+        <p style={{ color: dark ? '#8b949e' : '#888', fontSize: '0.95rem', marginBottom: '3rem' }}>
           Notes and writeups, for easy lookup.
         </p>
 
@@ -31,11 +31,11 @@ export default function Blog({ dark }) {
             <h2 style={{
               fontSize: '1rem',
               fontWeight: '600',
-              color: '#c0607a',
+              color: dark ? '#3fb950' : '#c0607a',
               textTransform: 'uppercase',
               letterSpacing: '0.08em',
               marginBottom: '1rem',
-              borderBottom: '1px solid #f0d0d8',
+              borderBottom: dark ? '1px solid #30363d' : '1px solid #f0d0d8',
               paddingBottom: '0.5rem',
             }}>
               {section.category}
