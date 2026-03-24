@@ -82,8 +82,8 @@ export default function About({ dark }) {
         <div>
           <h2 style={{ ...sectionHeading, color: t.accent, borderBottomColor: t.border }}>Awards</h2>
           <div style={{ ...card, backgroundColor: t.cardBg }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.3rem', marginBottom: '0.5rem' }}>
-              <div style={{ fontWeight: '600', color: t.textPrimary, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', marginBottom: '0.5rem' }}>
+              <div style={{ fontWeight: '600', color: t.textPrimary, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.3rem', flexWrap: 'wrap' }}>
                 1st <img src="/images/star.png" alt="star" style={{ width: '1rem', height: '1rem', objectFit: 'contain' }} /> Place at COBRUF Aerospace Competition 2018
               </div>
               <div style={{ fontSize: '0.825rem', color: t.accent }}>Engineers' Award</div>
