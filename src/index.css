@@ -231,6 +231,16 @@ button:focus-visible {
   }
 }
 
+.card-title {
+  font-size: 0.95rem;
+}
+
+@media (max-width: 480px) {
+  .card-title {
+    font-size: 0.8rem;
+  }
+}
+
 /* Projects page responsive */
 .projects-page {
   flex: 1;

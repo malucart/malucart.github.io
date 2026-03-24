@@ -62,7 +62,7 @@ export default function About({ dark }) {
               <div key={job.role + job.company} style={{ ...card, backgroundColor: t.cardBg }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.3rem', marginBottom: '0.5rem' }}>
                   <div>
-                    <div style={{ fontWeight: '600', color: t.textPrimary, fontSize: '0.95rem' }}>{job.role}</div>
+                    <div className="card-title" style={{ fontWeight: '600', color: t.textPrimary }}>{job.role}</div>
                     <div style={{ color: t.accent, fontSize: '0.875rem' }}>{job.company}</div>
                   </div>
                   <div style={{ fontSize: '0.825rem', color: t.textSecondary, whiteSpace: 'nowrap', flexShrink: 0 }}>{job.period}</div>
@@ -83,7 +83,7 @@ export default function About({ dark }) {
           <h2 style={{ ...sectionHeading, color: t.accent, borderBottomColor: t.border }}>Awards</h2>
           <div style={{ ...card, backgroundColor: t.cardBg }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem', marginBottom: '0.5rem' }}>
-              <div style={{ fontWeight: '600', color: t.textPrimary, fontSize: '0.95rem', display: 'flex', alignItems: 'center', gap: '0.3rem', flexWrap: 'wrap' }}>
+              <div className="card-title" style={{ fontWeight: '600', color: t.textPrimary, display: 'flex', alignItems: 'center', gap: '0.3rem', flexWrap: 'wrap' }}>
                 1st <img src="/images/star.png" alt="star" style={{ width: '1rem', height: '1rem', objectFit: 'contain' }} /> Place at COBRUF Aerospace Competition 2018
               </div>
               <div style={{ fontSize: '0.825rem', color: t.accent }}>Engineers' Award</div>
@@ -106,7 +106,7 @@ export default function About({ dark }) {
               <div key={edu.degree} style={{ ...card, backgroundColor: t.cardBg }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.3rem' }}>
                   <div>
-                    <div style={{ fontWeight: '600', color: t.textPrimary, fontSize: '0.95rem' }}>{edu.degree}</div>
+                    <div className="card-title" style={{ fontWeight: '600', color: t.textPrimary }}>{edu.degree}</div>
                     <div style={{ color: t.accent, fontSize: '0.875rem' }}>{edu.school}</div>
                   </div>
                   <div style={{ fontSize: '0.825rem', color: t.textSecondary, whiteSpace: 'nowrap', flexShrink: 0 }}>{edu.period}</div>
