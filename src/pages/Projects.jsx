@@ -134,7 +134,7 @@ export default function Projects({ dark }) {
         background: dark ? '#0d1117' : 'linear-gradient(135deg, #ffffff 0%, #F4A7B9 100%)',
       }}>
         <p style={{ margin: 0, fontSize: '0.75rem', color: dark ? '#a0d4a0' : '#888' }}>
-          louisa's ⚡
+          louisa's
         </p>
       </footer>
     </>

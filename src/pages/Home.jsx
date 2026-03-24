@@ -58,7 +58,7 @@ export default function Home({ dark }) {
         </h1>
 
         <p style={{ margin: 0, fontSize: '1.05rem', color: t.textSecondary, lineHeight: '1.7' }}>
-          Full stack engineer with a physics background that loves things that fly and go fast. I moved from rockets to pixels, and honestly? I love both. <br /> I also design before I build: wireframes first, code second. <br /> Clean UI with fast interactions is true <span className="sparkle-word">happiness<span className="sparkle-dot s1">✦</span><span className="sparkle-dot s2">✦</span><span className="sparkle-dot s3">✦</span></span>.
+          Full stack engineer with a physics background that loves things that fly and go fast. I moved from rockets to pixels, and honestly? I love both. <br /> I design before I build: wireframes first, code second. <br /> Clean UI with fast interactions is true <span className="sparkle-word">happiness<span className="sparkle-dot s1">✦</span><span className="sparkle-dot s2">✦</span><span className="sparkle-dot s3">✦</span></span>.
         </p>
 
         {/* Social links */}
