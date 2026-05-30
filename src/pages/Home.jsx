@@ -58,7 +58,7 @@ export default function Home({ dark }) {
         </h1>
 
         <p className="bio-text" style={{ margin: 0, fontSize: '1.05rem', color: t.textSecondary, lineHeight: '1.7' }}>
-          Full stack software engineer <br /> with a physics degree and security background.
+          Full stack software engineer <br /> with a physics degree and security background
         </p>
 
         {/* Social links */}
