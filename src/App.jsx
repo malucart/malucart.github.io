@@ -36,7 +36,7 @@ function App() {
         />
         <Routes>
           <Route path="/" element={<Home dark={dark} />} />
-          {/* <Route path="/blog" element={<Blog dark={dark} />} /> */} 
+          <Route path="/blog" element={<Blog dark={dark} />} />
           {/* <Route path="/about" element={<About dark={dark} />} /> */}
           <Route path="/projects" element={<Projects dark={dark} />} />
         </Routes>
